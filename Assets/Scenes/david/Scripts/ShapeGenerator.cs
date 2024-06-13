@@ -2,15 +2,18 @@ using UnityEngine;
 
 public class ShapeGenerator
 {
-    private ShapeSettings _settings;
+    private readonly ShapeSettings _settings;
+    private NoiseFilter _noiseFilter;
 
     public ShapeGenerator(ShapeSettings shapeSettings)
     {
         _settings = shapeSettings;
+        _noiseFilter = new NoiseFilter(_settings.noiseSettings);
     }
 
     public Vector3 CalculatePointOnPlanet(Vector3 pointOnUnitSphere)
     {
-        return pointOnUnitSphere * _settings.planetRadius;
+        float elevation = _noiseFilter.Evaluate(pointOnUnitSphere);
+        return pointOnUnitSphere * _settings.planetRadius * (1 + elevation);
     }
 }
