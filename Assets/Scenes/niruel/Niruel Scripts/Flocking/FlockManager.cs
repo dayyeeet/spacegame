@@ -11,7 +11,7 @@ public class FlockManager : MonoBehaviour
     [SerializeField] int numberOfAgents = 5;
      public GameObject[] allAgents;
      public Vector3 goalPosition = Vector3.zero;
-    Vector3 agentMovementLimits = new Vector3(5,0,5);
+     public Vector3 agentMovementLimits = new Vector3(5,0,5);
     
 
     [Header("Agent Setting")]
