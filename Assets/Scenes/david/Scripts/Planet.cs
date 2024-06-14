@@ -78,7 +78,7 @@ public class Planet : MonoBehaviour
     {
         foreach (var filter in meshFilters)
         {
-            filter.GetComponent<MeshRenderer>().sharedMaterial.color = colorSettings.terrainColor;
+            filter.GetComponent<MeshRenderer>().sharedMaterial.color = colorSettings.terrainColor.Evaluate(0);
         }
     }
 }

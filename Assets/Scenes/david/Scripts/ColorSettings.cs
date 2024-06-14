@@ -3,7 +3,8 @@ using UnityEngine;
 [CreateAssetMenu()]
 public class ColorSettings : ScriptableObject
 {
-    public Color terrainColor;
+    //Preparation for more advanced terrain coloring
+    public Gradient terrainColor;
     public Color foliageColor;
     public Color rockColor;
 }

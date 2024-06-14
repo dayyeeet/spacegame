@@ -2,12 +2,12 @@ using UnityEngine;
 
 public class TerrainFace
 {
-    private Mesh _mesh;
-    private int _resolution;
-    private Vector3 _localUp;
-    private Vector3 _axisA;
-    private Vector3 _axisB;
-    private ShapeGenerator _generator;
+    private readonly Mesh _mesh;
+    private readonly int _resolution;
+    private readonly Vector3 _localUp;
+    private readonly Vector3 _axisA;
+    private readonly Vector3 _axisB;
+    private readonly ShapeGenerator _generator;
 
     public TerrainFace(ShapeGenerator generator, Mesh mesh, int resolution, Vector3 localUp)
     {
@@ -23,7 +23,10 @@ public class TerrainFace
     {
         var vertices = new Vector3[_resolution * _resolution];
         var triangles = new int[(_resolution - 1) * (_resolution - 1) * 6];
-        int triIndex = 0;
+        var triIndex = 0;
+        //Preparation for advanced terrain coloring
+        var uv = (_mesh.uv.Length == vertices.Length) ? _mesh.uv : new Vector2[vertices.Length];
+
         for (var y = 0; y < _resolution; y++)
         {
             for (var x = 0; x < _resolution; x++)
@@ -32,7 +35,10 @@ public class TerrainFace
                 var percent = new Vector2(x, y) / (_resolution - 1);
                 var pointOnUnitCube = _localUp + (percent.x - .5f) * 2 * _axisA + (percent.y - .5f) * 2 * _axisB;
                 var pointOnUnitSphere = pointOnUnitCube.normalized;
-                vertices[i] = _generator.CalculatePointOnPlanet(pointOnUnitSphere);
+                var unscaledElevation = _generator.CalculateUnscaledElevation(pointOnUnitSphere);
+                vertices[i] = pointOnUnitSphere * _generator.GetScaledElevation(unscaledElevation);
+                //Preparation for advanced terrain coloring
+                uv[i].y = unscaledElevation;
                 if (x == _resolution - 1 || y == _resolution - 1)
                     continue;
 
@@ -51,5 +57,6 @@ public class TerrainFace
         _mesh.vertices = vertices;
         _mesh.triangles = triangles;
         _mesh.RecalculateNormals();
+        _mesh.uv = uv;
     }
 }

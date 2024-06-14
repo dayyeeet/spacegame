@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 64cac5c8018b0b54eb7dd10a446f0291, type: 3}
   m_Name: TestColors
   m_EditorClassIdentifier: 
-  terrainColor: {r: 1, g: 0, b: 0.3885517, a: 0}
+  terrainColor: {r: 0.55460125, g: 0.9716981, b: 0.73296535, a: 0}
   foliageColor: {r: 0, g: 0, b: 0, a: 0}
   rockColor: {r: 0, g: 0, b: 0, a: 0}
