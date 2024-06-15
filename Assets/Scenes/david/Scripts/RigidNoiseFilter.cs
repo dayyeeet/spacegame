@@ -17,9 +17,9 @@ public class RigidNoiseFilter : INoiseFilter
         var amplitude = 1f;
         for (int i = 0; i < _settings.numLayers; i++)
         {
-            float v = 1 - Mathf.Abs(_noise.Evaluate(point * frequency + _settings.centre));
+            var v = 1f - Mathf.Abs(_noise.Evaluate(point * frequency + _settings.centre));
             v *= v;
-            noiseValue += (v + 1) * .5f * amplitude;
+            noiseValue += (v + 1f) * .5f * amplitude;
             frequency += _settings.roughness;
             amplitude += _settings.persistence;
         }

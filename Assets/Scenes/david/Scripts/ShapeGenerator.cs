@@ -3,14 +3,16 @@ using UnityEngine;
 
 public class ShapeGenerator
 {
-    private readonly ShapeSettings _settings;
-    private readonly INoiseFilter[] _noiseFilters;
+    private ShapeSettings _settings;
+    private INoiseFilter[] _noiseFilters;
+    public MinMax elevationMinMax;
 
-    public ShapeGenerator(ShapeSettings shapeSettings)
+    public void UpdateSettings(ShapeSettings shapeSettings)
     {
         _settings = shapeSettings;
         _noiseFilters = _settings.noiseLayers.ToList()
             .Select(NoiseFilterFactory.CreateNoiseFilter).ToArray();
+        elevationMinMax = new MinMax();
     }
 
     public float CalculateUnscaledElevation(Vector3 pointOnUnitSphere)
@@ -35,7 +37,6 @@ public class ShapeGenerator
                 elevation += _noiseFilters[i].Evaluate(pointOnUnitSphere) * mask;
             }
         }
-
         return elevation;
     }
 
@@ -43,6 +44,7 @@ public class ShapeGenerator
     {
         float elevation = Mathf.Max(0, unscaledElevation);
         elevation = _settings.planetRadius * (1 + elevation);
+        elevationMinMax.AddValue(elevation);
         return elevation;
     }
 }
