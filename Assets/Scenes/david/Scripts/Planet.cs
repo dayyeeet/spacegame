@@ -10,8 +10,8 @@ public class Planet : MonoBehaviour
     public ShapeSettings shapeSettings;
     public ColorSettings colorSettings;
 
-    private ShapeGenerator _shapeGenerator = new ShapeGenerator();
-    private ColorGenerator _colorGenerator = new ColorGenerator();
+    private readonly ShapeGenerator _shapeGenerator = new ShapeGenerator();
+    private readonly ColorGenerator _colorGenerator = new ColorGenerator();
     
     [SerializeField, HideInInspector]
     private MeshFilter[] meshFilters;
