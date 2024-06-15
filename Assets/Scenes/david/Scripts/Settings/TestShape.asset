@@ -23,7 +23,7 @@ MonoBehaviour:
     baseRoughness: 1.04
     persistence: -0.96
     roughness: 0
-    centre: {x: 12.88, y: 3.54, z: 13.04}
+    centre: {x: 12.44, y: 3.54, z: 13.04}
   - filterType: 0
     enabled: 1
     useFirstLayerAsMask: 0
@@ -33,4 +33,4 @@ MonoBehaviour:
     baseRoughness: 0.51
     persistence: -0.85
     roughness: 3.7
-    centre: {x: 4.15, y: 3.54, z: 13.04}
+    centre: {x: 8.42, y: 3.54, z: 13.04}
