@@ -1,12 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class FlockAgent : MonoBehaviour
 {
     [SerializeField]float speed; 
     [SerializeField]bool turning = false;
+    
     // Start is called before the first frame update
     void Start()
     {
@@ -16,32 +16,33 @@ public class FlockAgent : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Bounds bounds = new Bounds(FlockManager.instance.transform.position, new Vector3(5,1,5) * 2);
-        if (transform.position.y < 0)
-        {
-            transform.position = new Vector3(transform.position.x, 0.1f, transform.position.z);
-        }
-        if (!bounds.Contains(transform.position))
-        {
-            turning = true;
-        }
-        else
-        {
-            turning = false;
-        }
-        if (turning)
-        {
-            Vector3 direction = FlockManager.instance.transform.position - this.transform.position;
-            transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(direction), FlockManager.instance.rotationSpeed * Time.deltaTime);
-        }
-        else
+
+        //Bounds bounds = new Bounds(FlockManager.instance.transform.position,  new Vector3 (10,1 ,10) * 2);
+        //if (transform.position.y < 0)
+        //{
+        //    transform.position = new Vector3(transform.position.x, 0.1f, transform.position.z);
+        //}
+        //if (!bounds.Contains(transform.position))
+        //{
+        //    turning = true;
+        //}
+        //else
+        //{
+        //    turning = false;
+        //}
+        //if (turning)
+        //{
+        //    Vector3 direction = FlockManager.instance.transform.position - this.transform.position;
+        //    transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(direction), FlockManager.instance.rotationSpeed * Time.deltaTime);
+        //}
+       // else
         {
             if (Random.Range(0, 100) < 10)
             {
                 speed = Random.Range(FlockManager.instance.minSpeed, FlockManager.instance.maxSpeed);
             }
 
-            //if (Random.Range(0, 100) < 20)
+            if (Random.Range(0, 100) < 20)
             {
                 ApplyRules();
             }

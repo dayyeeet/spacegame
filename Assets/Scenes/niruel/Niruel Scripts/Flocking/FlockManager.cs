@@ -12,7 +12,9 @@ public class FlockManager : MonoBehaviour
      public GameObject[] allAgents;
      public Vector3 goalPosition = Vector3.zero;
      public Vector3 agentMovementLimits = new Vector3(5,0,5);
-    
+     public GameObject currentmesshBonds;
+    public FauxGravityAttractor gravityAttractor;
+
 
     [Header("Agent Setting")]
     [Range(0f, 5f)]
