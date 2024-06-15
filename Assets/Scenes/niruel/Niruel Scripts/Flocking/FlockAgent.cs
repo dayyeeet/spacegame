@@ -60,7 +60,8 @@ public class FlockAgent : MonoBehaviour
         float neighbourDistance;
         int groupSize = 0;
 
-        foreach (GameObject agent in agents) {
+        foreach (GameObject agent in agents) 
+        {
             if (agent != this.gameObject)
             {
 
