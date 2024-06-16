@@ -387,7 +387,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isShrinkEnd: 0
-  nameOfSceneToLoad: 
+  nameOfSceneToLoad: GameHUD
   settingsPanel: {fileID: 1839085349}
   gameNameText: {fileID: 442292577}
   gameNameReference: {fileID: 398768176}
@@ -2181,6 +2181,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bd92199b19883d04fb4f6db2f63fb248, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isFadeTime: 0
   startPanel: {fileID: 254068126}
   gameNameText: {fileID: 442292577}
   pressSpaceText: {fileID: 726771245}
