@@ -4,11 +4,32 @@ using UnityEngine.UI;
 
 public class IntroManager : MonoBehaviour
 {
+    #region Singleton
+
+    public static IntroManager Instance;
+
+    private void Awake()
+    {
+        if (Instance == null)
+        {
+            Instance = this;
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+    }
+
+    #endregion
+    
+    public bool isFadeTime;
+    
     [SerializeField] private GameObject startPanel;
-    [SerializeField] private TextMeshProUGUI[] introTexts;
+    [SerializeField] private TextMeshProUGUI gameNameText;
+    [SerializeField] private TextMeshProUGUI pressSpaceText;
 
     private Image _startPanelImage;
-    private bool _isFadeTime;
+    
     
     private void Start()
     {
@@ -26,7 +47,8 @@ public class IntroManager : MonoBehaviour
     private void Update()
     {
         FadeManager.Instance.LerpFadeOut(_startPanelImage, .1f);
-        if (_isFadeTime)
+        
+        if (isFadeTime)
         {
             FadeInTexts();
         }
@@ -39,14 +61,12 @@ public class IntroManager : MonoBehaviour
 
     private void FadeInTexts()
     {
-        foreach (var text in introTexts)
-        {
-            FadeManager.Instance.FadeIn(text, .05f);
-        }
+        FadeManager.Instance.FadeIn(gameNameText, .1f);
+        FadeManager.Instance.FadeIn(pressSpaceText, .05f);
     }
 
     private void FadeDelay()
     {
-        _isFadeTime = true;
+        isFadeTime = true;
     }
 }

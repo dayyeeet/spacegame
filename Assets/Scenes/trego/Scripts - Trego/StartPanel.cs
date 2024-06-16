@@ -39,12 +39,13 @@ public class StartPanel : MonoBehaviour
         MoveAndShrink(gameNameText.gameObject, gameNameReference.gameObject, 1.5f);
         
         // Dissolve pressSpace text
-        FadeManager.Instance.FadeOut(pressSpaceText, .2f);
+        FadeManager.Instance.FadeOut(pressSpaceText, .3f);
+        IntroManager.Instance.isFadeTime = false;
     }
     
     private void MoveAndShrink(GameObject baseObject, GameObject targetObject, float speed)
     {
-        if (targetObject.transform.position.y - baseObject.transform.position.y > 2)
+        if (targetObject.transform.position.y - baseObject.transform.position.y > 1.6f)
         {
             baseObject.transform.position = Vector3.Lerp(baseObject.transform.position, targetObject.transform.position,
                 speed * Time.deltaTime);
@@ -65,7 +66,7 @@ public class StartPanel : MonoBehaviour
         foreach (var button in startButtons)
         {
             button.gameObject.SetActive(true);
-            yield return new WaitForSeconds(.2f);
+            yield return new WaitForSeconds(.3f);
         }
     }
     
