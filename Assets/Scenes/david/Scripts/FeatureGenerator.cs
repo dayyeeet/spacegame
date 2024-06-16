@@ -1,5 +1,7 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using JetBrains.Annotations;
 using UnityEngine;
 using Random = System.Random;
 using UnityRandom = UnityEngine.Random;
@@ -17,7 +19,13 @@ public class FeatureGenerator
     public void Populate(Planet planet)
     {
         var radius = planet.shapeSettings.planetRadius;
-        _tries = (int)planet.shapeSettings.planetRadius * 3 / 2;
+        _tries = (int) (planet.shapeSettings.planetRadius * 4 * Math.PI);
+        var populationObj = planet.GetObjectByName("features");
+        if (populationObj == null)
+        {
+            populationObj = new GameObject("features");
+            populationObj.transform.parent = planet.transform;
+        }
         var populated = new Dictionary<Vector3, GeneratableFeature>();
         var generationDict = ToGenerationOrderDict(_settings);
         foreach (var key in generationDict.Keys)
@@ -34,6 +42,7 @@ public class FeatureGenerator
                 var obj = GameObject.Instantiate(feature.prefab);
                 obj.transform.position = hit.point;
                 obj.transform.up = hit.normal;
+                obj.transform.parent = populationObj.transform;
                 populated.Add(hit.point, feature);
             }
         }

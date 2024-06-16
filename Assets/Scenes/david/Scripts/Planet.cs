@@ -72,7 +72,7 @@ public class Planet : MonoBehaviour
         }
     }
 
-    private GameObject GetObjectByName(string objectName)
+    public GameObject GetObjectByName(string objectName)
     {
         return transform.Find(objectName)?.gameObject;
     }
