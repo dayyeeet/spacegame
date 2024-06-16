@@ -61,7 +61,7 @@ public class IntroManager : MonoBehaviour
 
     private void FadeInTexts()
     {
-        FadeManager.Instance.FadeIn(gameNameText, .1f);
+        FadeManager.Instance.FadeIn(gameNameText, .2f);
         FadeManager.Instance.FadeIn(pressSpaceText, .05f);
     }
 

@@ -22,7 +22,7 @@ public class StartPanel : MonoBehaviour
     
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetKeyDown(KeyCode.Space) && IntroManager.Instance.isFadeTime)
         {
             _isSpacePressed = true;
         }
@@ -40,7 +40,6 @@ public class StartPanel : MonoBehaviour
         
         // Dissolve pressSpace text
         FadeManager.Instance.FadeOut(pressSpaceText, .3f);
-        IntroManager.Instance.isFadeTime = false;
     }
     
     private void MoveAndShrink(GameObject baseObject, GameObject targetObject, float speed)
@@ -57,6 +56,8 @@ public class StartPanel : MonoBehaviour
         {
             // Activate buttons when shrink stop
             StartCoroutine(ActivateButtons());
+            
+            IntroManager.Instance.isFadeTime = false;
             _isSpacePressed = false;
         }
     }
