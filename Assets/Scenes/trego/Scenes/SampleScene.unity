@@ -675,7 +675,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ed69facc0b119ba488780d210b507f43, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  shakeDuration: 6
+  shakeDuration: 4
   shakeMagnitude: 2
 --- !u!1 &384099102 stripped
 GameObject:
