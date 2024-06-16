@@ -5,12 +5,12 @@ using UnityEngine;
 [RequireComponent(typeof(BoxCollider))]
 public class FlockAgentV2 : MonoBehaviour
 {
-    BoxCollider m_BoxCollider;
-    public BoxCollider agentCollider {  get { return m_BoxCollider; } }
+    SphereCollider m_BoxCollider;
+    public SphereCollider agentCollider {  get { return m_BoxCollider; } }
     // Start is called before the first frame update
     void Start()
     {
-        m_BoxCollider = GetComponent<BoxCollider>();
+        m_BoxCollider = GetComponent<SphereCollider>();
     }
 
     public void Move(Vector3 velocity)

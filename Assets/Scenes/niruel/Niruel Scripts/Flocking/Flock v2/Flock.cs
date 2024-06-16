@@ -11,8 +11,8 @@ public class Flock : MonoBehaviour
 
     public int startCount = 25;
     //make const latter
-    [Range(0f,1f)]
-    [SerializeField]  float agentDensity = .1f;
+    //[Range(0f,1f)]
+    const float agentDensity = .3f;
 
     [Range(1f, 100f)]
     public float driveFactor = 10f;
@@ -20,7 +20,7 @@ public class Flock : MonoBehaviour
     [Range(1f,100f)]
     public float maxSpeed = 5f;
 
-    [Range(1f, 100f)]
+    [Range(0f, 100f)]
     public float neighborRadis = 1.5f;
 
     [Range(0f, 1f)]
@@ -61,6 +61,35 @@ public class Flock : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        foreach (FlockAgentV2 agent in agents)
+        {
+            List<Transform> contex = GetNearbyObjects(agent);
+            //Debug.Log(contex.Count); 
+            agent.GetComponentInChildren<MeshRenderer>().material.color = Color.Lerp(Color.white, Color.red, contex.Count / 6f);
+            Vector3 move = behavior.CalculateMover(agent, contex, this);
+            move *= driveFactor;
+            if (move.sqrMagnitude > squareMaxSpeed)
+            {
+                move = move.normalized * maxSpeed;
+            }
+            agent.Move(move);
+        }
+    }
+    List<Transform> GetNearbyObjects(FlockAgentV2 agent)
+    {
+        List<Transform> contex = new List<Transform>();
+        Collider[] ContexColliders = Physics.OverlapSphere(agent.transform.position, neighborRadis);
+        Debug.Log(neighborRadis);
+        //Debug.Log(transform.position);
+        foreach (Collider c in ContexColliders)
+        {
+            if (c != agent.agentCollider )
+            {
+                contex.Add(c.transform);
+            }
+        }
+        //Debug.Log(contex.Count);
+        return contex;
+
     }
 }
