@@ -10,9 +10,11 @@ public class Planet : MonoBehaviour
 
     public ShapeSettings shapeSettings;
     public ColorSettings colorSettings;
+    public FeatureSettings featureSettings;
 
     private readonly ShapeGenerator _shapeGenerator = new ShapeGenerator();
     private readonly ColorGenerator _colorGenerator = new ColorGenerator();
+    private readonly FeatureGenerator _featureGenerator = new FeatureGenerator();
 
     [SerializeField, HideInInspector] private MeshFilter[] meshFilters;
     public GameObject gravityObject { get; private set; }
@@ -23,10 +25,17 @@ public class Planet : MonoBehaviour
         GeneratePlanet();
     }
 
+    public void Populate()
+    {
+        _featureGenerator.UpdateSettings(featureSettings);
+        _featureGenerator.Populate(this);
+    }
+
     void Initialize()
     {
         _shapeGenerator.UpdateSettings(shapeSettings);
         _colorGenerator.UpdateSettings(colorSettings);
+        _featureGenerator.UpdateSettings(featureSettings);
 
         if (meshFilters == null || meshFilters.Length == 0)
             meshFilters = new MeshFilter[6];
