@@ -135,7 +135,7 @@ GameObject:
   - component: {fileID: 30068585}
   - component: {fileID: 30068584}
   - component: {fileID: 30068583}
-  m_Layer: 7
+  m_Layer: 6
   m_Name: Cube (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -240,7 +240,7 @@ GameObject:
   - component: {fileID: 222328363}
   - component: {fileID: 222328362}
   - component: {fileID: 222328361}
-  m_Layer: 7
+  m_Layer: 6
   m_Name: Cube (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -365,6 +365,7 @@ MonoBehaviour:
   agentPrefab: {fileID: 4446322882416735447, guid: 1116a9a2ef30d3c458a6471bd258386a,
     type: 3}
   behavior: {fileID: 11400000, guid: cc7ef91f30409b646b0d6e3270bfafcf, type: 2}
+  gravityAttractor: {fileID: 0}
   startCount: 25
   driveFactor: 10
   maxSpeed: 3
@@ -730,7 +731,7 @@ GameObject:
   - component: {fileID: 578209747}
   - component: {fileID: 578209746}
   - component: {fileID: 578209745}
-  m_Layer: 7
+  m_Layer: 6
   m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -870,6 +871,7 @@ MonoBehaviour:
   agentPrefab: {fileID: 4446322882416735447, guid: 1d92cf1e7c02698428df2fe8647b7182,
     type: 3}
   behavior: {fileID: 11400000, guid: 19cd385b1d19fbd41857710b61842161, type: 2}
+  gravityAttractor: {fileID: 0}
   startCount: 25
   driveFactor: 10
   maxSpeed: 3

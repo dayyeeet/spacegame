@@ -32,6 +32,6 @@ public class FauxGravityBody : MonoBehaviour
     void Update()
     {
        //FlockManager.instance.gravityAttractor.Attract(rb);
-        f.FauxGravity(rb);
+        //f.FauxGravity(rb);
     }
 }
