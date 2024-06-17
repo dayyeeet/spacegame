@@ -24,7 +24,6 @@ public class TerrainFace
         var vertices = new Vector3[_resolution * _resolution];
         var triangles = new int[(_resolution - 1) * (_resolution - 1) * 6];
         var triIndex = 0;
-        //Preparation for advanced terrain coloring
         var uv = (_mesh.uv.Length == vertices.Length) ? _mesh.uv : new Vector2[vertices.Length];
 
         for (var y = 0; y < _resolution; y++)
@@ -37,7 +36,6 @@ public class TerrainFace
                 var pointOnUnitSphere = pointOnUnitCube.normalized;
                 var unscaledElevation = _generator.CalculateUnscaledElevation(pointOnUnitSphere);
                 vertices[i] = pointOnUnitSphere * _generator.GetScaledElevation(unscaledElevation);
-                //Preparation for advanced terrain coloring
                 uv[i].y = unscaledElevation;
                 if (x == _resolution - 1 || y == _resolution - 1)
                     continue;

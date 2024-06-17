@@ -22,6 +22,11 @@ public class PlanetEditor : Editor
             _planet.GeneratePlanet();
         }
 
+        if (GUILayout.Button("Populate Features"))
+        {
+            _planet.Populate();
+        }
+
         DrawSettingsEditor(_planet.shapeSettings, _planet.OnShapeSettingsUpdated);
         DrawSettingsEditor(_planet.colorSettings, _planet.OnColorSettingsUpdated);
     }
