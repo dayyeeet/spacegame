@@ -21,6 +21,7 @@ public class CompositeBehavior : FlockBehavior
 
         for (int i = 0; i < behaviors.Length; i++)
         {
+            //Debug.Log(behaviors[i].name);
             Vector3 partialMove = behaviors[i].CalculateMover(agent, context, flock) * weights[i];
 
             if (partialMove != Vector3.zero)
@@ -30,10 +31,10 @@ public class CompositeBehavior : FlockBehavior
                     partialMove.Normalize();
                     partialMove *= weights[i];
                 }
-                else
-                {
+                //else
+                
                     move += partialMove;
-                }
+                
             }
         }
         return move;

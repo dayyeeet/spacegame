@@ -4,13 +4,18 @@ using UnityEngine;
 
 public class FauxGravityBody : MonoBehaviour
 {
-    Rigidbody rb
-
-;    //Transform agentTransform;
+    Rigidbody rb;
+    FlockAgentV2 f;
+    //Transform agentTransform;
     // Start is called before the first frame update
     void Start()
     {
-         rb = GetComponent<Rigidbody>();
+        f = GetComponent<FlockAgentV2>();
+        if (f == null)
+        {
+            Debug.Log("Problems");
+        }
+        rb = GetComponent<Rigidbody>();
         if (rb != null )
         {
             rb.constraints = RigidbodyConstraints.FreezeRotation;
@@ -26,6 +31,7 @@ public class FauxGravityBody : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-       FlockManager.instance.gravityAttractor.Attract(rb);
+       //FlockManager.instance.gravityAttractor.Attract(rb);
+        f.FauxGravity(rb);
     }
 }

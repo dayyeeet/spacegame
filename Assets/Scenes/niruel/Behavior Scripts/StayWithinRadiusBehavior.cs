@@ -10,15 +10,22 @@ public class StayWithinRadiusBehavior : FlockBehavior
     public override Vector3 CalculateMover(FlockAgentV2 agent, List<Transform> context, Flock flock)
     {
        
+       //Debug.DrawLine(agent.transform.position, centerPoint, Color.red);
        Vector3 centerOffset = centerPoint-agent.transform.position;
-        //Debug.Log(centerOffset);
+        
         float t = centerOffset.magnitude/radius;
-        Debug.Log(t);
 
         if (t < 0.9f)
         {  
             return Vector3.zero;
         }
-        return centerOffset * t*t;
+        if ( context.Count==0)
+        {
+            Debug.Log("gh");
+            return Vector3.zero;
+        }
+        Vector3 d = centerOffset *t *t ;
+       
+        return d;
     }
 }

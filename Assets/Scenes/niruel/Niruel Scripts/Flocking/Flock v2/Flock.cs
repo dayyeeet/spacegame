@@ -8,6 +8,7 @@ public class Flock : MonoBehaviour
     public FlockAgentV2 agentPrefab;
     List<FlockAgentV2> agents = new List<FlockAgentV2>();
     public FlockBehavior behavior;
+    public FauxGravityAttractor gravityAttractor;
 
     public int startCount = 25;
     //make const latter
@@ -46,7 +47,8 @@ public class Flock : MonoBehaviour
         for (int i = 0; i < startCount; i++)
         {
             Vector2 randCirclePos = Random.insideUnitCircle * startCount * agentDensity;
-            Vector3 randPoint = transform.position + new Vector3(randCirclePos.x, 0, randCirclePos.y);
+            
+            Vector3 randPoint = transform.position + new Vector3(randCirclePos.x, transform.position.y+ 282, randCirclePos.y);
             FlockAgentV2 newAgent = Instantiate(
                 agentPrefab,
                 randPoint,
@@ -54,6 +56,7 @@ public class Flock : MonoBehaviour
                 transform
                 );
             newAgent.name = "Agent" + i;
+            newAgent.Init(this);
             agents.Add(newAgent);
         }
     }
@@ -61,12 +64,13 @@ public class Flock : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+       // Debug.Log(this.transform.position);
         foreach (FlockAgentV2 agent in agents)
         {
             List<Transform> contex = GetNearbyObjects(agent);
             
             //Debug.DrawRay(agent.transform.position,Vector3.forward,Color.yellow);
-            agent.GetComponentInChildren<MeshRenderer>().material.color = Color.Lerp(Color.white, Color.red, contex.Count / 6f);
+            //agent.GetComponentInChildren<MeshRenderer>().material.color = Color.Lerp(Color.white, Color.red, contex.Count / 6f);
             Vector3 move = behavior.CalculateMover(agent, contex, this);
             move *= driveFactor;
             if (move.sqrMagnitude > squareMaxSpeed)

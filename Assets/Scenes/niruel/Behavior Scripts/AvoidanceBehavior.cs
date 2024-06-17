@@ -4,10 +4,13 @@ using UnityEngine;
 
 
 [CreateAssetMenu(menuName = "Flock/Behavior/Avoidence")]
-public class AvoidanceBehavior : FlockBehavior
+public class AvoidanceBehavior : FilteredFlockBehavior
 {
+   
+   
     public override Vector3 CalculateMover(FlockAgentV2 agent, List<Transform> context, Flock flock)
     {
+        
         if (context.Count == 0)
         {
             return Vector3.zero;
@@ -15,12 +18,14 @@ public class AvoidanceBehavior : FlockBehavior
 
         Vector3 avoidanceMove = Vector3.zero;
         int nAvoid = 0;
-        foreach (Transform t in context)
+        List<Transform> filteredContex = (Filter == null) ? context : Filter.filter(agent, context);
+        foreach (Transform t in filteredContex)
         {
-            if (Vector3.SqrMagnitude(t.position - agent.transform.position)< flock.squareAviodanceRadius)
+            Vector3 closestPoint = t.gameObject.GetComponent<Collider>().ClosestPoint(agent.transform.position);
+            if (Vector3.SqrMagnitude(closestPoint - agent.transform.position)< flock.squareAviodanceRadius)
             {
                 nAvoid++;
-                avoidanceMove += agent.transform.position- t.position;
+                avoidanceMove += agent.transform.position- closestPoint;
             }
             
         }

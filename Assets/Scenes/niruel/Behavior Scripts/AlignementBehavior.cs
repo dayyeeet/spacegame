@@ -4,17 +4,19 @@ using UnityEngine;
 
 
 [CreateAssetMenu(menuName = "Flock/Behavior/Alignment")]
-public class AlignementBehavior : FlockBehavior
+public class AlignementBehavior : FilteredFlockBehavior
 {
     public override Vector3 CalculateMover(FlockAgentV2 agent, List<Transform> context, Flock flock)
     {
         if (context.Count == 0)
         {
-            return agent.transform.forward;
+            Debug.Log("nnn");
+            return Vector3.forward;
         }
 
         Vector3 alignmentnMove = Vector3.zero;
-        foreach (Transform t in context)
+        List<Transform> filteredContex = (Filter == null) ? context : Filter.filter(agent, context);
+        foreach (Transform t in filteredContex)
         {
             alignmentnMove += t.transform.forward;
         }
