@@ -4,6 +4,7 @@ using UnityEditor;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
+[RequireComponent(typeof(SpaceShipMovementEvent))]
 public class Spaceship : MonoBehaviour
 {
     [Tooltip("Is player controls the spaceship")]
@@ -23,11 +24,13 @@ public class Spaceship : MonoBehaviour
     [SerializeField] private float rollSpeed = 90f;
     [SerializeField] private float rollAcceleration = 3.5f;
 
+    private SpaceShipMovementEvent spaceShipMovementEvent;
 
     private void Awake()
     {
         Cursor.visible = true;
         Cursor.lockState = CursorLockMode.Confined;
+        this.spaceShipMovementEvent = this.GetComponent<SpaceShipMovementEvent>();
     }
 
     void Start()
@@ -48,24 +51,34 @@ public class Spaceship : MonoBehaviour
             SceneManager.LoadScene(SceneManager.GetActiveScene().name);
         }
 
-        if(this.isPlayerInSpaceship)
+        float verticalInput = Input.GetAxisRaw("Vertical");
+        float horizontalInput = Input.GetAxisRaw("Horizontal");
+        float hoverInput = Input.GetAxisRaw("Hover");
+        float rollInput = Input.GetAxisRaw("Roll");
+
+        if (this.isPlayerInSpaceship)
         {
             this.lookInput = Input.mousePosition;
             this.mouseDistance.x  = (lookInput.x - this.screenCenter.x) / this.screenCenter.y;
             this.mouseDistance.y  = (lookInput.y - this.screenCenter.y) / this.screenCenter.y;
             this.mouseDistance = Vector2.ClampMagnitude(this.mouseDistance, 1f);
 
-            this.rollInput = Mathf.Lerp(this.rollInput, Input.GetAxisRaw("Roll"), this.rollAcceleration * Time.deltaTime);
+            this.rollInput = Mathf.Lerp(this.rollInput, rollInput, this.rollAcceleration * Time.deltaTime);
             this.transform.Rotate(-this.mouseDistance.y * this.lookRateSpeed * Time.deltaTime,
                 this.mouseDistance.x * this.lookRateSpeed * Time.deltaTime,
                 this.rollInput * this.rollSpeed * Time.deltaTime,
                 Space.Self);
 
-            this.activeForwardSpeed = Mathf.Lerp(this.activeForwardSpeed, Input.GetAxis("Vertical") * this.forwardSpeed, this.forwardAcceleration * Time.deltaTime);
-            this.activeStrafeSpeed = Mathf.Lerp(this.activeStrafeSpeed, Input.GetAxis("Horizontal") * this.strafeSpeed, this.strafeAcceleration * Time.deltaTime);
-            this.activeHoverSpeed = Mathf.Lerp(this.activeHoverSpeed, Input.GetAxis("Hover") * this.hoverSpeed, this.hoverAcceleration * Time.deltaTime);
+            this.activeForwardSpeed = Mathf.Lerp(this.activeForwardSpeed, verticalInput * this.forwardSpeed, this.forwardAcceleration * Time.deltaTime);
+            this.activeStrafeSpeed = Mathf.Lerp(this.activeStrafeSpeed, horizontalInput * this.strafeSpeed, this.strafeAcceleration * Time.deltaTime);
+            this.activeHoverSpeed = Mathf.Lerp(this.activeHoverSpeed, hoverInput * this.hoverSpeed, this.hoverAcceleration * Time.deltaTime);
             this.transform.position += this.transform.forward * this.activeForwardSpeed * Time.deltaTime;
             this.transform.position += (this.transform.right * this.activeStrafeSpeed * Time.deltaTime) + (this.transform.up * this.activeHoverSpeed * Time.deltaTime);
+
+            this.spaceShipMovementEvent.CallOnSpaceshipMovement(
+                this.transform.position,
+                verticalInput
+                );
         }
     }
 }
