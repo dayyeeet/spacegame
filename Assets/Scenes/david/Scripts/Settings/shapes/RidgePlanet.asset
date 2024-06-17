@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7befbb5edffe76443ae29edb75ef6667, type: 3}
   m_Name: RidgePlanet
   m_EditorClassIdentifier: 
-  planetRadius: 270
+  planetRadius: 50
   noiseLayers:
   - filterType: 1
     enabled: 1

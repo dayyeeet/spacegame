@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7bc411427e8c43f2bcc8c2f05b5fbe92, type: 3}
   m_Name: Default Feature Settings
   m_EditorClassIdentifier: 
-  rockPercent: 0.5
+  rockPercent: 0.08
   rocks:
   - {fileID: 11400000, guid: f96cb2ec3f66d0b4cb22ac30a7abc50d, type: 2}
   - {fileID: 11400000, guid: 0168ca8dffb453940b3e0780bcf22c81, type: 2}
@@ -24,12 +24,34 @@ MonoBehaviour:
   - {fileID: 11400000, guid: eff4561f4f5e53c47a3cfb5b33e2bf62, type: 2}
   - {fileID: 11400000, guid: 0cb228936558eb640b5136556ad5263b, type: 2}
   - {fileID: 11400000, guid: 3e7117d5bfba1104d96a63bec0281a46, type: 2}
-  flowerPercent: 0.1
+  flowerPercent: 0
   flowers: []
-  treePercent: 0.89
+  treePercent: 0
+  treeNoise:
+    filterType: 1
+    enabled: 1
+    useFirstLayerAsMask: 0
+    strength: 1.06
+    numLayers: 2
+    minValue: 0.29
+    baseRoughness: 1.09
+    persistence: -1.05
+    roughness: -0.26
+    centre: {x: 43, y: 5.72, z: 13.04}
   trees:
   - {fileID: 11400000, guid: c1ad148345385eb438cfec7f8cda7caa, type: 2}
-  groundCoverPercent: 1
+  groundNoise:
+    filterType: 1
+    enabled: 1
+    useFirstLayerAsMask: 0
+    strength: 1.06
+    numLayers: 2
+    minValue: 0.29
+    baseRoughness: 1.09
+    persistence: -1.05
+    roughness: -0.26
+    centre: {x: 33.76, y: 3.54, z: 13.04}
+  groundCoverPercent: 0.47
   groundCover:
   - {fileID: 11400000, guid: de64ff2cbffe5f34f968a1bb5a6fb731, type: 2}
   - {fileID: 11400000, guid: f066962e3b43a2d47958d26b02a99113, type: 2}
