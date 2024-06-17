@@ -64,7 +64,8 @@ public class Flock : MonoBehaviour
         foreach (FlockAgentV2 agent in agents)
         {
             List<Transform> contex = GetNearbyObjects(agent);
-            //Debug.Log(contex.Count); 
+            
+            //Debug.DrawRay(agent.transform.position,Vector3.forward,Color.yellow);
             agent.GetComponentInChildren<MeshRenderer>().material.color = Color.Lerp(Color.white, Color.red, contex.Count / 6f);
             Vector3 move = behavior.CalculateMover(agent, contex, this);
             move *= driveFactor;
@@ -79,8 +80,6 @@ public class Flock : MonoBehaviour
     {
         List<Transform> contex = new List<Transform>();
         Collider[] ContexColliders = Physics.OverlapSphere(agent.transform.position, neighborRadis);
-        Debug.Log(neighborRadis);
-        //Debug.Log(transform.position);
         foreach (Collider c in ContexColliders)
         {
             if (c != agent.agentCollider )
