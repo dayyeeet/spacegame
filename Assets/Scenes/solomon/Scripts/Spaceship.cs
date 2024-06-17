@@ -9,15 +9,19 @@ public class Spaceship : MonoBehaviour
     [Tooltip("Is player controls the spaceship")]
     [SerializeField] private bool isPlayerInSpaceship;
 
-    [SerializeField] private float forwardSpeed = 25f, strafeSpeed = 7.5f, hoverSpeed = 5f;
-    private float activeForwardSpeed, activeStrafeSPeed, activeHoverSPeed;
+    [SerializeField] private float forwardSpeed = 25f;
+    [SerializeField] private float strafeSpeed = 7.5f;
+    [SerializeField] private float hoverSpeed = 5f;
+
+    private float activeForwardSpeed, activeStrafeSpeed, activeHoverSpeed;
     private float forwardAcceleration = 2.5f, strafeAcceleration = 2f, hoverAcceleration = 2f;
 
     [SerializeField] private float lookRateSpeed = 90f;
     private Vector2 lookInput, screenCenter, mouseDistance;
 
     private float rollInput;
-    [SerializeField] private float rollSpeed = 90f, rollAcceleration = 3.5f;
+    [SerializeField] private float rollSpeed = 90f;
+    [SerializeField] private float rollAcceleration = 3.5f;
 
 
     private void Awake()
@@ -57,11 +61,11 @@ public class Spaceship : MonoBehaviour
                 this.rollInput * this.rollSpeed * Time.deltaTime,
                 Space.Self);
 
-            this.activeForwardSpeed = Mathf.Lerp(this.activeForwardSpeed, Input.GetAxis("Vertical") * forwardSpeed, forwardAcceleration * Time.deltaTime);
-            this.activeStrafeSPeed = Mathf.Lerp(this.activeStrafeSPeed, Input.GetAxis("Horizontal") * forwardSpeed, forwardAcceleration * Time.deltaTime);
-            this.activeHoverSPeed = Mathf.Lerp(this.activeHoverSPeed, Input.GetAxis("Hover") * forwardSpeed, forwardAcceleration * Time.deltaTime);
+            this.activeForwardSpeed = Mathf.Lerp(this.activeForwardSpeed, Input.GetAxis("Vertical") * this.forwardSpeed, this.forwardAcceleration * Time.deltaTime);
+            this.activeStrafeSpeed = Mathf.Lerp(this.activeStrafeSpeed, Input.GetAxis("Horizontal") * this.strafeSpeed, this.strafeAcceleration * Time.deltaTime);
+            this.activeHoverSpeed = Mathf.Lerp(this.activeHoverSpeed, Input.GetAxis("Hover") * this.hoverSpeed, this.hoverAcceleration * Time.deltaTime);
             this.transform.position += this.transform.forward * this.activeForwardSpeed * Time.deltaTime;
-            this.transform.position += (this.transform.right * this.activeStrafeSPeed * Time.deltaTime) + (this.transform.up * this.activeHoverSPeed * Time.deltaTime);
+            this.transform.position += (this.transform.right * this.activeStrafeSpeed * Time.deltaTime) + (this.transform.up * this.activeHoverSpeed * Time.deltaTime);
         }
     }
 }
