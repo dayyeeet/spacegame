@@ -12,6 +12,8 @@ public class SC_RigidbodyPlayerMovement : MonoBehaviour
     [Header("Sprinting")]
     public bool canSprint = true;
     public float sprintSpeed = 7.0f;
+    public float sprintTime = 5.0f;
+    public float staminaReplenishFactor = 0.25f;
     
     [Header("Crouching")]
     public float crouchSpeed = 1.0f;
@@ -67,6 +69,8 @@ public class SC_RigidbodyPlayerMovement : MonoBehaviour
         transform.rotation = transform.rotation * localRotation;
        
         StateHandler();
+
+        SprintTime();
     }
 
     void FixedUpdate()
@@ -84,7 +88,7 @@ public class SC_RigidbodyPlayerMovement : MonoBehaviour
         }
         
         // Mode - Sprinting
-        if (grounded && Input.GetButton("Shift") && canSprint)
+        if (grounded && Input.GetButton("Shift") && canSprint && sprintTime > 0)
         {
             state = MovementState.sprinting;
             speed = sprintSpeed;
@@ -149,6 +153,22 @@ public class SC_RigidbodyPlayerMovement : MonoBehaviour
         if (Input.GetButtonUp("Control"))
         {
             transform.localScale = new Vector3(transform.localScale.x, startYScale, transform.localScale.z);
+        }
+    }
+
+    void SprintTime()
+    {
+        if (state == MovementState.sprinting)
+        {
+            if (sprintTime > 0)
+            {
+                sprintTime -= Time.deltaTime;
+            }
+        }
+
+        if (state != MovementState.sprinting && sprintTime < 5.0f)
+        {
+            sprintTime += Time.deltaTime * staminaReplenishFactor;
         }
     }
 
