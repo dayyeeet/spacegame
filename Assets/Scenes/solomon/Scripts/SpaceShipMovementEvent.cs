@@ -7,18 +7,22 @@ public class SpaceShipMovementEvent : MonoBehaviour
 {
     public event Action<SpaceShipMovementEvent, SpaceShipMovementArgs> OnSpaceshipMovement;
 
-    public void CallOnSpaceshipMovement(Vector3 position, float verticalInput)
+    public void CallOnSpaceshipMovement(float verticalInput, float horizontalInput, float hoverInput, float rollInput)
     {
         OnSpaceshipMovement?.Invoke(this, new SpaceShipMovementArgs()
         {
-            position = position,
-            verticalInput = verticalInput
+            verticalInput = verticalInput,
+            horizontalInput = horizontalInput,
+            hoverInput = hoverInput,
+            rollInput = rollInput
         });
     }
 }
 
 public class SpaceShipMovementArgs : EventArgs
 {
-    public Vector3 position;
     public float verticalInput;
+    public float horizontalInput;
+    public float hoverInput;
+    public float rollInput;
 }

@@ -28,7 +28,7 @@ public class Spaceship : MonoBehaviour
 
     private void Awake()
     {
-        Cursor.visible = true;
+        Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Confined;
         this.spaceShipMovementEvent = this.GetComponent<SpaceShipMovementEvent>();
     }
@@ -59,12 +59,13 @@ public class Spaceship : MonoBehaviour
         if (this.isPlayerInSpaceship)
         {
             this.lookInput = Input.mousePosition;
-            this.mouseDistance.x  = (lookInput.x - this.screenCenter.x) / this.screenCenter.y;
-            this.mouseDistance.y  = (lookInput.y - this.screenCenter.y) / this.screenCenter.y;
+            this.mouseDistance.x = (lookInput.x - this.screenCenter.x) / this.screenCenter.y;
+            this.mouseDistance.y = (lookInput.y - this.screenCenter.y) / this.screenCenter.y;
             this.mouseDistance = Vector2.ClampMagnitude(this.mouseDistance, 1f);
 
             this.rollInput = Mathf.Lerp(this.rollInput, rollInput, this.rollAcceleration * Time.deltaTime);
-            this.transform.Rotate(-this.mouseDistance.y * this.lookRateSpeed * Time.deltaTime,
+            this.transform.Rotate(
+                -this.mouseDistance.y * this.lookRateSpeed * Time.deltaTime,
                 this.mouseDistance.x * this.lookRateSpeed * Time.deltaTime,
                 this.rollInput * this.rollSpeed * Time.deltaTime,
                 Space.Self);
@@ -76,8 +77,10 @@ public class Spaceship : MonoBehaviour
             this.transform.position += (this.transform.right * this.activeStrafeSpeed * Time.deltaTime) + (this.transform.up * this.activeHoverSpeed * Time.deltaTime);
 
             this.spaceShipMovementEvent.CallOnSpaceshipMovement(
-                this.transform.position,
-                verticalInput
+                verticalInput,
+                horizontalInput,
+                hoverInput,
+                rollInput
                 );
         }
     }
