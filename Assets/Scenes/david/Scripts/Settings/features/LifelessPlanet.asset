@@ -26,8 +26,11 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 3e7117d5bfba1104d96a63bec0281a46, type: 2}
   - {fileID: 11400000, guid: f854e2f93d2f9ed46a5d5b2321b1e9d3, type: 2}
   - {fileID: 11400000, guid: 95124b54a03c00e41b2f41a4b10e90c7, type: 2}
-  flowerPercent: 0
-  flowers: []
+  flowerPercent: 0.06
+  flowers:
+  - {fileID: 11400000, guid: ff297ff0e19292744be0b138bb471a32, type: 2}
+  - {fileID: 11400000, guid: d1aae14947ade0a4f86779945544a29e, type: 2}
+  - {fileID: 11400000, guid: 82926a99dfeae9b44af8cc4d3c43aa44, type: 2}
   treePercent: 0.08
   treeNoise:
     filterType: 1

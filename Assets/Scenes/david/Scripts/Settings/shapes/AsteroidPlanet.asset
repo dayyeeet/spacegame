@@ -12,25 +12,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7befbb5edffe76443ae29edb75ef6667, type: 3}
   m_Name: AsteroidPlanet
   m_EditorClassIdentifier: 
-  planetRadius: 270
+  planetRadius: 50
   noiseLayers:
   - filterType: 0
     enabled: 1
     useFirstLayerAsMask: 0
-    strength: 0
+    strength: 0.39
     numLayers: 2
-    minValue: 0
-    baseRoughness: 0.01
-    persistence: 0
-    roughness: 0
-    centre: {x: 0, y: 0, z: 0}
+    minValue: 0.41
+    baseRoughness: 0.43
+    persistence: 0.87
+    roughness: 1.77
+    centre: {x: 1.73, y: 0, z: 0}
   - filterType: 1
     enabled: 1
     useFirstLayerAsMask: 0
-    strength: 0.36
+    strength: 0.07
     numLayers: 2
-    minValue: 3.04
-    baseRoughness: 63.65
-    persistence: 1.38
+    minValue: 3.12
+    baseRoughness: 3.23
+    persistence: 2.25
     roughness: -1.12
     centre: {x: 0, y: 0, z: 0}
