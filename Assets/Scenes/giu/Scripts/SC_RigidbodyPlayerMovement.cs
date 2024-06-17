@@ -1,20 +1,33 @@
-using UnityEngine;
+    using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody))]
 [RequireComponent(typeof(CapsuleCollider))]
 
-public class SC_RigidbodyWalkerGiu : MonoBehaviour
+public class SC_RigidbodyPlayerMovement : MonoBehaviour
 {
-    public float speed = 15.0f;
+    [Header("Movement")]
+    private float speed;
+    public float walkSpeed = 10.0f;
+    public bool canSprint = true;
+    public float sprintSpeed = 25.0f;
+    
+    [Header("Jumping")]
     public bool canJump = true;
     public float jumpHeight = 2.0f;
-    public bool canSprint = true;
-
-    public float sprintSpeed = 35.0f;
+    
+    [Header("Looking")]
     public Camera playerCamera;
     public float lookSpeed = 2.0f;
     public float lookXLimit = 60.0f;
 
+    public MovementState state;
+    public enum MovementState
+    {
+        walking,
+        sprinting,
+        air
+    }
+    
     bool grounded = false;
     Rigidbody r;
     Vector2 rotation = Vector2.zero;
@@ -34,6 +47,8 @@ public class SC_RigidbodyWalkerGiu : MonoBehaviour
 
     void Update()
     {
+        StateHandler();
+        
         // Player and Camera rotation
         rotation.x += -Input.GetAxis("Mouse Y") * lookSpeed;
         rotation.x = Mathf.Clamp(rotation.x, -lookXLimit, lookXLimit);
@@ -44,6 +59,34 @@ public class SC_RigidbodyWalkerGiu : MonoBehaviour
     }
 
     void FixedUpdate()
+    {
+        MovePlayer();
+    }
+    
+    private void StateHandler()
+    {
+        // Mode - Sprinting
+        if (grounded && Input.GetKey("left shift") && canSprint)
+        {
+            state = MovementState.sprinting;
+            speed = sprintSpeed;
+        }
+        
+        // Mode - Walking
+        else if (grounded)
+        {
+            state = MovementState.walking;
+            speed = walkSpeed;  
+        } 
+        
+        // Mode - Air
+        else
+        {
+            state = MovementState.air;
+        }
+    }
+    
+    private void MovePlayer()
     {
         if (grounded)
         {
@@ -63,15 +106,18 @@ public class SC_RigidbodyWalkerGiu : MonoBehaviour
 
             r.AddForce(velocityChange, ForceMode.VelocityChange);
 
-            if (Input.GetButton("Jump") && canJump)
-            {
-                r.AddForce(transform.up * jumpHeight, ForceMode.VelocityChange);
-            }
+            Jump();
         }
-
         grounded = false;
     }
-
+    void Jump()
+    {
+        if (Input.GetButton("Jump") && canJump)
+        {
+            r.AddForce(transform.up * jumpHeight, ForceMode.VelocityChange);
+        }
+    }
+    
     void OnCollisionStay()
     {
         grounded = true;
