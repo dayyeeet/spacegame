@@ -5,11 +5,18 @@
 
 public class SC_RigidbodyPlayerMovement : MonoBehaviour
 {
-    [Header("Movement")]
+    [Header("Walking")]
     private float speed;
-    public float walkSpeed = 10.0f;
+    public float walkSpeed = 3.0f;
+    
+    [Header("Sprinting")]
     public bool canSprint = true;
-    public float sprintSpeed = 25.0f;
+    public float sprintSpeed = 7.0f;
+    
+    [Header("Crouching")]
+    public float crouchSpeed = 1.0f;
+    public float crouchYScale = 0.5f;
+    private float startYScale; 
     
     [Header("Jumping")]
     public bool canJump = true;
@@ -25,6 +32,7 @@ public class SC_RigidbodyPlayerMovement : MonoBehaviour
     {
         walking,
         sprinting,
+        crouching,
         air
     }
     
@@ -43,12 +51,13 @@ public class SC_RigidbodyPlayerMovement : MonoBehaviour
 
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
+
+        startYScale = transform.localScale.y;
     }
 
     void Update()
     {
-        StateHandler();
-        
+        Crouch();
         // Player and Camera rotation
         rotation.x += -Input.GetAxis("Mouse Y") * lookSpeed;
         rotation.x = Mathf.Clamp(rotation.x, -lookXLimit, lookXLimit);
@@ -56,6 +65,8 @@ public class SC_RigidbodyPlayerMovement : MonoBehaviour
 
         Quaternion localRotation = Quaternion.Euler(0f, Input.GetAxis("Mouse X") * lookSpeed, 0f);
         transform.rotation = transform.rotation * localRotation;
+       
+        StateHandler();
     }
 
     void FixedUpdate()
@@ -65,15 +76,22 @@ public class SC_RigidbodyPlayerMovement : MonoBehaviour
     
     private void StateHandler()
     {
+        // Mode - Crouching
+        if (Input.GetButton("Control"))
+        {
+            state = MovementState.crouching;
+            speed = crouchSpeed;
+        }
+        
         // Mode - Sprinting
-        if (grounded && Input.GetKey("left shift") && canSprint)
+        if (grounded && Input.GetButton("Shift") && canSprint)
         {
             state = MovementState.sprinting;
             speed = sprintSpeed;
         }
         
         // Mode - Walking
-        else if (grounded)
+        else if (grounded && !Input.GetButton("Control"))
         {
             state = MovementState.walking;
             speed = walkSpeed;  
@@ -117,7 +135,23 @@ public class SC_RigidbodyPlayerMovement : MonoBehaviour
             r.AddForce(transform.up * jumpHeight, ForceMode.VelocityChange);
         }
     }
-    
+
+    void Crouch()
+    {
+        // start crouch
+        if (Input.GetButtonDown("Control"))
+        {
+            transform.localScale = new Vector3(transform.localScale.x, crouchYScale, transform.localScale.z);
+            r.AddForce(Vector3.down * 5f, ForceMode.Impulse);
+        }
+
+        // stop crouch
+        if (Input.GetButtonUp("Control"))
+        {
+            transform.localScale = new Vector3(transform.localScale.x, startYScale, transform.localScale.z);
+        }
+    }
+
     void OnCollisionStay()
     {
         grounded = true;
