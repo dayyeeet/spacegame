@@ -1,11 +1,15 @@
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
-using Random = System.Random;
 
 public class FeatureGenerator
 {
     private FeatureSettings _settings;
+    private int _seed;
+    public void UpdateSeed(int seed)
+    {
+        _seed = seed;
+    }
 
     public void UpdateSettings(FeatureSettings settings)
     {
@@ -14,11 +18,13 @@ public class FeatureGenerator
 
     public void Populate(Planet planet, TerrainFace face)
     {
+        Random.InitState(_seed);
         var populationObj = planet.GetObjectByName("features");
         if (populationObj == null)
         {
             populationObj = new GameObject("features");
             populationObj.transform.parent = planet.transform;
+            populationObj.transform.position = planet.transform.position;
         }
 
         var populated = new Dictionary<Vector3, GeneratableFeature>();
@@ -40,9 +46,9 @@ public class FeatureGenerator
             {
                 if(generated) continue;
                 var chance = defaultChance * key.Value;
-                if (new Random().NextDouble() > chance) continue;
+                if (Random.value > chance) continue;
                 if(!IsAvailable(vertice, populated)) continue;
-                var randomFeature = key.Key[new Random().Next(key.Key.Length)];
+                var randomFeature = key.Key[Random.Range(0, key.Key.Length)];
                 GenerateFeature(randomFeature, vertice, populated, planet, parent);
                 generated = true;
             }
@@ -62,7 +68,7 @@ public class FeatureGenerator
                 var noise = NoiseFilterFactory.CreateNoiseFilter(key.Value);
                 if (noise.Evaluate(vertice) <= key.Value.minValue) continue;
                 if (!IsAvailable(vertice, populated)) continue;
-                var randomFeature = key.Key[new Random().Next(key.Key.Length)];
+                var randomFeature = key.Key[Random.Range(0, key.Key.Length)];
                 GenerateFeature(randomFeature, vertice, populated, planet, parent);
                 generated = true;
             }
@@ -72,12 +78,21 @@ public class FeatureGenerator
     private static void GenerateFeature(GeneratableFeature feature, Vector3 point,
         Dictionary<Vector3, GeneratableFeature> populated, Planet planet, GameObject parent)
     {
-        var center = planet.gravityObject.transform.position - point;
-        var down = center.normalized;
         var obj = GameObject.Instantiate(feature.prefab);
-        obj.transform.position = point;
-        obj.transform.up = -down;
+        obj.transform.position = point + planet.transform.position;
+        var center = obj.transform.position - planet.transform.position;
+        obj.transform.up = center;
         obj.transform.parent = parent.transform;
+        if (feature.isCollidable)
+        {
+            var meshFilter = obj.GetComponent<MeshFilter>();
+            if (meshFilter != null)
+            {
+                var newCollider = obj.AddComponent<MeshCollider>();
+                newCollider.sharedMesh = meshFilter.sharedMesh;
+                obj.layer = 6;
+            }
+        }
         populated.Add(point, feature);
     }
 

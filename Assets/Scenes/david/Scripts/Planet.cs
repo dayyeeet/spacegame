@@ -7,6 +7,8 @@ public class Planet : MonoBehaviour
     [Range(6.5f, 11f)] public float gravityConstant = 9.8f;
 
     public bool autoUpdate = true;
+    public string planetName;
+    public int seed;
 
     public ShapeSettings shapeSettings;
     public ColorSettings colorSettings;
@@ -27,6 +29,7 @@ public class Planet : MonoBehaviour
 
     public void Populate()
     {
+        _featureGenerator.UpdateSeed(seed);
         _featureGenerator.UpdateSettings(featureSettings);
         foreach(var face in _terrainFaces)
             _featureGenerator.Populate(this, face);
@@ -53,12 +56,14 @@ public class Planet : MonoBehaviour
         gravity.transform.localScale = new Vector3(shapeSettings.planetRadius * 2, shapeSettings.planetRadius * 2,
             shapeSettings.planetRadius * 2);
         gravity.transform.parent = transform;
+        gravity.transform.position = transform.position;
         for (var i = 0; i < 6; i++)
         {
             if (meshFilters[i] == null)
             {
                 var obj = new GameObject("mesh");
                 obj.transform.parent = transform;
+                obj.transform.position = transform.position;
                 var mesh = new Mesh();
                 obj.AddComponent<MeshRenderer>();
                 meshFilters[i] = obj.AddComponent<MeshFilter>();

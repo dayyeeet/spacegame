@@ -3,6 +3,7 @@ using UnityEngine;
 [CreateAssetMenu()]
 public class FeatureSettings : ScriptableObject
 {
+    public int seed = 0;
     [Range(0f, 1f)] public float rockPercent;
     public GeneratableFeature[] rocks;
     [Range(0f, 1f)] public float flowerPercent;

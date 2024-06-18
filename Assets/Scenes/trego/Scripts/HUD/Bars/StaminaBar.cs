@@ -10,7 +10,7 @@ public class StaminaBar : StatusBar
         Slider = GetComponent<Slider>(); 
         
         // Set it manually for a limited time
-        Slider.maxValue = 5;
+        Slider.maxValue = 5.0f;
         UpdateBar();
     }
 

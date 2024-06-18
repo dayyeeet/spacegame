@@ -1,6 +1,8 @@
+    using Unity.VisualScripting;
     using UnityEngine;
+    using UnityEngine.Serialization;
 
-[RequireComponent(typeof(Rigidbody))]
+    [RequireComponent(typeof(Rigidbody))]
 [RequireComponent(typeof(CapsuleCollider))]
 
 public class SC_RigidbodyPlayerMovement : MonoBehaviour
@@ -29,8 +31,19 @@ public class SC_RigidbodyPlayerMovement : MonoBehaviour
     public float lookSpeed = 2.0f;
     public float lookXLimit = 60.0f;
 
-    public MovementState state;
-    public enum MovementState
+    [Header("HP")] 
+    public float maxHp = 100.0f;
+    private float hp;
+    private float vyCache;
+    public float hpImpactThreshold = 2000.0f;
+    public float hpSmallBruises = 3000.0f;
+    public float hpNormalInjuries = 5000.0f;
+    public float hpSeriousInjuries = 8000.0f;
+    public float hpFatalInjuries = 10000.0f;
+    public float hpDeath = 15000.0f;
+
+    private MovementState state;
+    private enum MovementState
     {
         walking,
         sprinting,
@@ -42,7 +55,15 @@ public class SC_RigidbodyPlayerMovement : MonoBehaviour
     Rigidbody r;
     Vector2 rotation = Vector2.zero;
     float maxVelocityChange = 10.0f;
+
+    private SC_FallDamage fallDamage;
     
+    public SC_RigidbodyPlayerMovement()
+    {
+        hp = maxHp;
+        fallDamage = new SC_FallDamage();
+    }
+
     void Awake()
     {
         r = GetComponent<Rigidbody>();
@@ -70,14 +91,16 @@ public class SC_RigidbodyPlayerMovement : MonoBehaviour
        
         StateHandler();
 
-        SprintTime();
-    }
+        }
 
     void FixedUpdate()
     {
+        SprintTime();
         MovePlayer();
-    }
+        vyCache = r.velocity.y;
+       }
     
+    // Movement
     private void StateHandler()
     {
         // Mode - Crouching
@@ -171,9 +194,48 @@ public class SC_RigidbodyPlayerMovement : MonoBehaviour
             sprintTime += Time.deltaTime * staminaReplenishFactor;
         }
     }
-
+    
+    // Health
+    void OnCollisionEnter(Collision col)
+    {
+        if (Vector3.Dot(col.GetContact(0).normal, Vector3.up) < 0.5f)
+        {
+            if (r.velocity.y < -0.5f)
+            {
+                r.velocity = Vector3.up * r.velocity.y;
+                return;
+            }
+        }
+        
+        float impactForce;
+        impactForce = fallDamage.calculateImpactForce(r, vyCache, Time.fixedDeltaTime);
+        
+        float hpDamage = fallDamage.calculateFallDamage(
+            impactForce, hpImpactThreshold, hpSmallBruises, hpNormalInjuries, hpSeriousInjuries, hpFatalInjuries, hpDeath);
+        takeDamage(hpDamage);
+        
+        //Debug.Log("Der Spieler hat Schaden erhalten: " + hpDamage + " ImpactForce war " + impactForce);
+    }
+    
     void OnCollisionStay()
     {
         grounded = true;
     }
+    
+    public float returnHp()
+    {
+        return hp;
+    }
+    
+    public void takeDamage(float hpDamage)
+    {
+        hp -= hpDamage;
+    }
+    
+    public void Healing(float healPoints)
+    {
+        // hp += healPoints;
+        // hp = Mathf.Clamp(hp, 0, 100); 
+    }
+    
 }
