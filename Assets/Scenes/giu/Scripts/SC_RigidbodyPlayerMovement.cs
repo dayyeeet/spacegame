@@ -234,8 +234,8 @@ public class SC_RigidbodyPlayerMovement : MonoBehaviour
     
     public void Healing(float healPoints)
     {
-        // hp += healPoints;
-        // hp = Mathf.Clamp(hp, 0, 100); 
+        hp += healPoints;
+        hp = Mathf.Clamp(hp, 0, 100); 
     }
     
 }
