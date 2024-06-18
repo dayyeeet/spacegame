@@ -27,7 +27,7 @@ public class PursueBehavior : FilteredFlockBehavior
             //Vector3 closestPoint = t.gameObject.GetComponent<Collider>().ClosestPoint(agent.transform.position);
             Debug.DrawLine(agent.transform.position, t.position,Color.red);
             float distance = Vector3.Distance(agent.transform.position, t.position);
-            //Debug.Log(distance);
+            Debug.Log(distance);
             if (distance > 3f /*1.2f*/)
             {
                 moveToPlayer = t.position - agent.transform.position;

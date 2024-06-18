@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: Pursue Behavior
   m_EditorClassIdentifier: 
   Filter: {fileID: 11400000, guid: 3979b2793dd92d246975aa8b0c6db9af, type: 2}
-  agentSmoothTime: 0.3
+  agentSmoothTime: 0.1

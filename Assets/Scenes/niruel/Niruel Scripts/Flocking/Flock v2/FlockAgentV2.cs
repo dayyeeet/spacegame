@@ -21,7 +21,7 @@ public class FlockAgentV2 : MonoBehaviour
         spideranim = GetComponentInChildren<spiderAnimation>();
         m_SphereCollider = GetComponent<Collider>();
         rb = GetComponent<Rigidbody>();
-        player = GameObject.Find("Player");
+        player = GameObject.Find("First Person Playerg");
         if (player != null)
         {
             //Debug.Log($"player is here with {player.name}");
@@ -43,6 +43,12 @@ public class FlockAgentV2 : MonoBehaviour
     int attackCount = 0;
     private void Update()
     {
+        RaycastHit hit;
+        if (Physics.Raycast(transform.position,-Vector3.up,out hit,3f))
+        {
+            //Debug.Log(hit.collider.gameObject.name);
+            transform.up = hit.transform.up;
+        }
         float distance = Vector3.Distance(transform.position, player.transform.position);
 
         if (distance<3f )

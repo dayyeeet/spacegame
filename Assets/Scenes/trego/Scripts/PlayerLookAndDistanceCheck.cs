@@ -43,11 +43,11 @@ public class PlayerLookAndDistanceCheck : MonoBehaviour
         }
         else
         {
-            // If no object is hit by the ray or it's too far away, disable the outline
-            if (_outline.enabled == true)
-            {
-                _outline.enabled = false;
-            }
+            //// If no object is hit by the ray or it's too far away, disable the outline
+            //if (_outline.enabled == true)
+            //{
+            //    _outline.enabled = false;
+            //}
         }
     }
 }
