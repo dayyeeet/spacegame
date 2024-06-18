@@ -15,3 +15,4 @@ MonoBehaviour:
   size: 2
   prefab: {fileID: 3705902742926665268, guid: 5cebe2a4682309d48b7f35987ae3d135, type: 3}
   isGroundCover: 0
+  isCollidable: 1

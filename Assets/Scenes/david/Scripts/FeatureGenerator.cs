@@ -83,6 +83,16 @@ public class FeatureGenerator
         var center = obj.transform.position - planet.transform.position;
         obj.transform.up = center;
         obj.transform.parent = parent.transform;
+        if (feature.isCollidable)
+        {
+            var meshFilter = obj.GetComponent<MeshFilter>();
+            if (meshFilter != null)
+            {
+                var newCollider = obj.AddComponent<MeshCollider>();
+                newCollider.sharedMesh = meshFilter.sharedMesh;
+                obj.layer = 6;
+            }
+        }
         populated.Add(point, feature);
     }
 
