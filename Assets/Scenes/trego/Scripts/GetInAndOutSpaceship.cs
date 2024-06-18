@@ -12,7 +12,7 @@ public class GetInAndOutSpaceship : MonoBehaviour
     [SerializeField] private GameObject planetGameObject;
     
     private Spaceship _spaceship;
-    // private Rigidbody _spaceshipRigidbody;
+    private Rigidbody _spaceshipRigidbody;
     
     private SkinnedMeshRenderer _playerMesh;
     private SC_RigidbodyPlayerMovement _playerController;
@@ -21,6 +21,7 @@ public class GetInAndOutSpaceship : MonoBehaviour
     private void Start()
     {
         _spaceship = GetComponentInParent<Spaceship>();
+        _spaceshipRigidbody = GetComponentInParent<Rigidbody>();
         
         _playerMesh = playerGameObject.GetComponentInChildren<SkinnedMeshRenderer>();
         _playerCamera = playerGameObject.GetComponentInChildren<Camera>();
@@ -32,7 +33,9 @@ public class GetInAndOutSpaceship : MonoBehaviour
         isSpaceShipOnLand =
             (planetGameObject.transform.position - _spaceship.gameObject.transform.position).magnitude <= 55;
         // Debug.Log((planetGameObject.transform.position - _spaceship.gameObject.transform.position).magnitude);
+        
         StartCoroutine(GetInSpaceship());
+        
         if (_spaceship.isPlayerInSpaceship && Input.GetKeyDown(KeyCode.F) && isSpaceShipOnLand)
         {
             StartCoroutine(GetOutSpaceship());
@@ -45,9 +48,10 @@ public class GetInAndOutSpaceship : MonoBehaviour
         if ((playerGameObject.transform.position - transform.position).magnitude <= 15 && Input.GetKeyDown(KeyCode.F))
         {
             yield return new WaitForSeconds(0.2f);
-
+            
             _spaceship.isPlayerInSpaceship = true;
             spaceshipCamera.gameObject.SetActive(true);
+            _spaceshipRigidbody.isKinematic = false;
             
             _playerMesh.enabled = false;
             _playerController.enabled = false;

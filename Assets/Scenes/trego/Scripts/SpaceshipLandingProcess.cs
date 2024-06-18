@@ -1,19 +1,22 @@
 using UnityEngine;
+using UnityEngine.UI;
 
 public class SpaceshipLandingProcess : MonoBehaviour
 {
     [SerializeField] private Planet planetGameObject;
-    [SerializeField] private float landingSpeed;
+    [SerializeField] private GameObject landingUIText;
 
     private SC_PlanetGravity _gravity;
     private GetInAndOutSpaceship _getInAndOutController;
-    private Vector3 _landingPoint;
-
+    private Rigidbody _spaceshipRigidbody;
+    
     private bool _canShipLand;
     private bool _isLanding;
 
     private void Start()
     {
+        _spaceshipRigidbody = GetComponent<Rigidbody>();
+        
         _gravity = GetComponent<SC_PlanetGravity>();
         _gravity.enabled = false;
 
@@ -24,6 +27,7 @@ public class SpaceshipLandingProcess : MonoBehaviour
     {
         if (_isLanding)
         {
+            landingUIText.SetActive(false);
             return;
         }
         
@@ -31,11 +35,17 @@ public class SpaceshipLandingProcess : MonoBehaviour
         
         Physics.Raycast(transform.position, transform.forward, out RaycastHit hit,100.0f);
 
-        if (hit.collider.gameObject)
+        if (hit.collider != null && hit.collider.gameObject)
         {
             var planetToLand = GetComponentFromAnyParent<Planet>(hit.collider.gameObject);
             _gravity.planet = planetToLand;
             _canShipLand = planetToLand != null;
+            landingUIText.SetActive(true);
+        }
+        else if (hit.collider == null)
+        {
+            _canShipLand = false;
+            landingUIText.SetActive(false);
         }
     }
 
@@ -43,6 +53,7 @@ public class SpaceshipLandingProcess : MonoBehaviour
     {
         if (_gravity.enabled)
         {
+            _spaceshipRigidbody.isKinematic = true;
             _gravity.enabled = false;
             _isLanding = false;
             StartCoroutine(_getInAndOutController.GetOutSpaceship());
@@ -52,17 +63,11 @@ public class SpaceshipLandingProcess : MonoBehaviour
     private void StartLanding()
     {
         if (_canShipLand && Input.GetKeyDown(KeyCode.L))
-        {
+        {            
+            landingUIText.SetActive(false);
             _isLanding = true;
             _gravity.enabled = true;
         }
-        
-    
-        // if (transform.position != _landingPoint)
-        // {
-        //     var direction = _landingPoint - transform.position;
-        //     transform.Translate(direction * (Time.deltaTime * landingSpeed));
-        // }
     }
     
     T GetComponentFromAnyParent<T>(GameObject child) where T : Component
