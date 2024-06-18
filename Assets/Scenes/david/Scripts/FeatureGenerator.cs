@@ -1,59 +1,108 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using JetBrains.Annotations;
 using UnityEngine;
-using Random = System.Random;
-using UnityRandom = UnityEngine.Random;
 
 public class FeatureGenerator
 {
     private FeatureSettings _settings;
-    private int _tries;
+    private int _seed;
+    public void UpdateSeed(int seed)
+    {
+        _seed = seed;
+    }
 
     public void UpdateSettings(FeatureSettings settings)
     {
         _settings = settings;
     }
 
-    public void Populate(Planet planet)
+    public void Populate(Planet planet, TerrainFace face)
     {
-        var radius = planet.shapeSettings.planetRadius;
-        _tries = (int) (planet.shapeSettings.planetRadius * 4 * Math.PI);
+        Random.InitState(_seed);
         var populationObj = planet.GetObjectByName("features");
         if (populationObj == null)
         {
             populationObj = new GameObject("features");
             populationObj.transform.parent = planet.transform;
+            populationObj.transform.position = planet.transform.position;
         }
+
         var populated = new Dictionary<Vector3, GeneratableFeature>();
-        var generationDict = ToGenerationOrderDict(_settings);
-        foreach (var key in generationDict.Keys)
+        var randomGenerationDict = ToRandomGenerationOrderDict(_settings);
+        GenerateFeatureRandomPopulated(randomGenerationDict, face.mesh.vertices, populated, planet, populationObj);
+
+        var noiseGenerationDict = ToNoiseGenerationOrderDict(_settings);
+        GenerateFeatureNoisePopulated(noiseGenerationDict, face.mesh.vertices, populated, planet, populationObj);
+    }
+
+    private static void GenerateFeatureRandomPopulated(Dictionary<GeneratableFeature[], float> keys, Vector3[] vertices,
+        Dictionary<Vector3, GeneratableFeature> populated, Planet planet, GameObject parent)
+    {
+        var defaultChance = 0.3f;
+        foreach (var vertice in vertices)
         {
-            if(key.Length == 0) continue;
-            var localTries = _tries * generationDict[key];
-            for (var i = 0; i < localTries; i++)
+            var generated = false;
+            foreach (var key in keys)
             {
-                var direction = UnityRandom.onUnitSphere * radius * 2;
-                var transform = planet.gravityObject.transform;
-                Physics.Raycast(transform.position + direction, -direction, out var hit);
-                if(!IsAvailable(hit, populated)) continue;
-                var feature = key[new Random().Next(key.Length)];
-                var obj = GameObject.Instantiate(feature.prefab);
-                obj.transform.position = hit.point;
-                obj.transform.up = hit.normal;
-                obj.transform.parent = populationObj.transform;
-                populated.Add(hit.point, feature);
+                if(generated) continue;
+                var chance = defaultChance * key.Value;
+                if (Random.value > chance) continue;
+                if(!IsAvailable(vertice, populated)) continue;
+                var randomFeature = key.Key[Random.Range(0, key.Key.Length)];
+                GenerateFeature(randomFeature, vertice, populated, planet, parent);
+                generated = true;
             }
         }
     }
 
-    private static bool IsAvailable(RaycastHit hit, Dictionary<Vector3, GeneratableFeature> populated)
+    private static void GenerateFeatureNoisePopulated(Dictionary<GeneratableFeature[], NoiseSettings> keys,
+        Vector3[] vertices,
+        Dictionary<Vector3, GeneratableFeature> populated, Planet planet, GameObject parent)
     {
-        return !populated.Any(entry => !entry.Value.isGroundCover && Vector3.Distance(entry.Key, hit.point) < entry.Value.size);
+        foreach (var vertice in vertices)
+        {
+            var generated = false;
+            foreach (var key in keys)
+            {
+                if(generated) continue;
+                var noise = NoiseFilterFactory.CreateNoiseFilter(key.Value);
+                if (noise.Evaluate(vertice) <= key.Value.minValue) continue;
+                if (!IsAvailable(vertice, populated)) continue;
+                var randomFeature = key.Key[Random.Range(0, key.Key.Length)];
+                GenerateFeature(randomFeature, vertice, populated, planet, parent);
+                generated = true;
+            }
+        }
     }
 
-    private Dictionary<GeneratableFeature[], float> ToGenerationOrderDict(FeatureSettings settings)
+    private static void GenerateFeature(GeneratableFeature feature, Vector3 point,
+        Dictionary<Vector3, GeneratableFeature> populated, Planet planet, GameObject parent)
+    {
+        var obj = GameObject.Instantiate(feature.prefab);
+        obj.transform.position = point + planet.transform.position;
+        var center = obj.transform.position - planet.transform.position;
+        obj.transform.up = center;
+        obj.transform.parent = parent.transform;
+        if (feature.isCollidable)
+        {
+            var meshFilter = obj.GetComponent<MeshFilter>();
+            if (meshFilter != null)
+            {
+                var newCollider = obj.AddComponent<MeshCollider>();
+                newCollider.sharedMesh = meshFilter.sharedMesh;
+                obj.layer = 6;
+            }
+        }
+        populated.Add(point, feature);
+    }
+
+    private static bool IsAvailable(Vector3 hit, Dictionary<Vector3, GeneratableFeature> populated)
+    {
+        return !populated.Any(
+            entry => (!entry.Value.isGroundCover || entry.Key == hit) && Vector3.Distance(entry.Key, hit) < entry.Value.size);
+    }
+
+    private Dictionary<GeneratableFeature[], float> ToRandomGenerationOrderDict(FeatureSettings settings)
     {
         var dict = new Dictionary<GeneratableFeature[], float>
         {
@@ -62,6 +111,21 @@ public class FeatureGenerator
             { settings.trees, settings.treePercent },
             { settings.flowers, settings.flowerPercent }
         };
+        return dict;
+    }
+    
+    private Dictionary<GeneratableFeature[], NoiseSettings> ToNoiseGenerationOrderDict(FeatureSettings settings)
+    {
+        var dict = new Dictionary<GeneratableFeature[], NoiseSettings>();
+        if (settings.groundNoise is { enabled: true })
+        {
+            dict.Add(settings.groundCover, settings.groundNoise);
+        }
+
+        if (settings.treeNoise is { enabled: true })
+        {
+            dict.Add(settings.trees, settings.treeNoise);
+        }
         return dict;
     }
 }
