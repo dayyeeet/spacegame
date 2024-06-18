@@ -1,0 +1,64 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7bc411427e8c43f2bcc8c2f05b5fbe92, type: 3}
+  m_Name: AlienPlanetFeatures
+  m_EditorClassIdentifier: 
+  rockPercent: 0.06
+  rocks:
+  - {fileID: 11400000, guid: 0168ca8dffb453940b3e0780bcf22c81, type: 2}
+  - {fileID: 11400000, guid: 394bafe0ba732034bb92dfbef4e1fd5c, type: 2}
+  - {fileID: 11400000, guid: f96cb2ec3f66d0b4cb22ac30a7abc50d, type: 2}
+  - {fileID: 11400000, guid: 95124b54a03c00e41b2f41a4b10e90c7, type: 2}
+  - {fileID: 11400000, guid: f854e2f93d2f9ed46a5d5b2321b1e9d3, type: 2}
+  - {fileID: 11400000, guid: 5251fca4de3c05c44804088be6f211e2, type: 2}
+  - {fileID: 11400000, guid: 215fa168b5824fa4b855957203ba8a8c, type: 2}
+  - {fileID: 11400000, guid: 7347e65f052a7084d9e4d8b98c9ced71, type: 2}
+  - {fileID: 11400000, guid: 62dc133de021a3a4292bd4a6ff026384, type: 2}
+  - {fileID: 11400000, guid: eff4561f4f5e53c47a3cfb5b33e2bf62, type: 2}
+  - {fileID: 11400000, guid: 0cb228936558eb640b5136556ad5263b, type: 2}
+  - {fileID: 11400000, guid: 3e7117d5bfba1104d96a63bec0281a46, type: 2}
+  flowerPercent: 0.1
+  flowers:
+  - {fileID: 11400000, guid: ff297ff0e19292744be0b138bb471a32, type: 2}
+  - {fileID: 11400000, guid: d1aae14947ade0a4f86779945544a29e, type: 2}
+  - {fileID: 11400000, guid: 82926a99dfeae9b44af8cc4d3c43aa44, type: 2}
+  treePercent: 0.02
+  treeNoise:
+    filterType: 1
+    enabled: 1
+    useFirstLayerAsMask: 0
+    strength: 0.4
+    numLayers: 2
+    minValue: 0.56
+    baseRoughness: 0.85
+    persistence: 0.44
+    roughness: 0.88
+    centre: {x: 0, y: 0, z: 0}
+  trees:
+  - {fileID: 11400000, guid: c1ad148345385eb438cfec7f8cda7caa, type: 2}
+  - {fileID: 11400000, guid: 942308f44c17c4944879be4fb3f72a28, type: 2}
+  - {fileID: 11400000, guid: 9ca47002700b67147b4eed7e9871fabe, type: 2}
+  - {fileID: 11400000, guid: fc5836fce1a85f44db50a3dce409e992, type: 2}
+  - {fileID: 11400000, guid: df0570242bbc8a84e9f59f8f6bbb3f14, type: 2}
+  groundNoise:
+    filterType: 1
+    enabled: 0
+    useFirstLayerAsMask: 0
+    strength: 0.4
+    numLayers: 2
+    minValue: 0.56
+    baseRoughness: 0.85
+    persistence: 0.44
+    roughness: 0.88
+    centre: {x: 0, y: 0, z: 0}
+  groundCoverPercent: 0
+  groundCover: []
