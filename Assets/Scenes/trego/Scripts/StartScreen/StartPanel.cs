@@ -3,23 +3,28 @@ using TMPro;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class StartPanel : MonoBehaviour
 {
     public bool isShrinkEnd;
     
     [SerializeField] private string nameOfSceneToLoad;
-    [SerializeField] private GameObject settingsPanel;
+    [SerializeField] private GameObject creditsPanel;
     [SerializeField] private TextMeshProUGUI gameNameText;
     [SerializeField] private TextMeshProUGUI gameNameReference;
     [SerializeField] private TextMeshProUGUI pressSpaceText;
     [SerializeField] private  StartButtons[] startButtons;
     [SerializeField] private  AudioSource buttonClickSound;
+    [SerializeField] private  TMP_InputField seedInputField;
     
     private bool _isSpacePressed = false;
+    private bool _isOnCreditsPage = false;
     
     private void Update()
     {
+        CloseCreditsPanel();
+        
         if (Input.GetKeyDown(KeyCode.Space) && IntroManager.Instance.isFadeTime)
         {
             _isSpacePressed = true;
@@ -62,6 +67,8 @@ public class StartPanel : MonoBehaviour
 
     private IEnumerator ActivateButtons()
     {
+        seedInputField.gameObject.SetActive(true);
+        
         foreach (var button in startButtons)
         {
             button.gameObject.SetActive(true);
@@ -76,11 +83,31 @@ public class StartPanel : MonoBehaviour
     }
 
     // Will be activated when settings panel be ready
-    // public void SettingsButton()
-    // {
-    //     buttonClickSound.Play();
-    //     settingsPanel.SetActive(!settingsPanel.activeSelf);
-    // }
+    public void CreditsButton()
+    {
+        buttonClickSound.Play();
+        creditsPanel.SetActive(true);
+        foreach (var button in startButtons)
+        {
+            button.gameObject.SetActive(false);
+        }
+
+        _isOnCreditsPage = true;
+    }
+
+    private void CloseCreditsPanel()
+    {
+        if (Input.GetKeyDown(KeyCode.Escape) && _isOnCreditsPage)
+        {
+            creditsPanel.SetActive(false);
+            foreach (var button in startButtons)
+            { 
+                button.gameObject.SetActive(true);
+            }
+
+            _isOnCreditsPage = false;
+        }
+    }
 
     public void QuitButton()
     {
