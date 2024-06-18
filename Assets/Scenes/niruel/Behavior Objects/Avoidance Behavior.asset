@@ -1,0 +1,15 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0ff41820eeacf02438228d03bc158e91, type: 3}
+  m_Name: Avoidance Behavior
+  m_EditorClassIdentifier: 
+  Filter: {fileID: 11400000, guid: 094c6a1ba7acfcf45829ea05ef13084a, type: 2}

@@ -10,9 +10,17 @@ public class SC_PlanetGravity : MonoBehaviour
     void Start()
     {
         r = GetComponent<Rigidbody>();
+        if (planet == null)
+        {
+            planet = GameObject.FindAnyObjectByType<Planet>();
+            if (planet != null)
+            {
+                //Debug.Log("reeeeeeeee");
+            }
+        }
     }
 
-    void FixedUpdate()
+    void Update()
     {
         Vector3 toCenter = planet.gravityObject.transform.position - transform.position;
         toCenter.Normalize();
