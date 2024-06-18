@@ -8,6 +8,8 @@ public class GetInAndOutSpaceship : MonoBehaviour
 {
     [SerializeField] private GameObject playerGameObject;
     [SerializeField] private Camera spaceshipCamera;
+    [SerializeField] private bool isSpaceShipOnLand;
+    [SerializeField] private GameObject planetGameObject;
     
     private Spaceship _spaceship;
     // private Rigidbody _spaceshipRigidbody;
@@ -27,6 +29,9 @@ public class GetInAndOutSpaceship : MonoBehaviour
 
     private void Update()
     {
+        isSpaceShipOnLand =
+            (planetGameObject.transform.position - _spaceship.gameObject.transform.position).magnitude <= 55;
+        Debug.Log((planetGameObject.transform.position - _spaceship.gameObject.transform.position).magnitude);
         StartCoroutine(GetInSpaceship());
         StartCoroutine(GetOutSpaceship());
     }
@@ -49,7 +54,7 @@ public class GetInAndOutSpaceship : MonoBehaviour
     }
     private IEnumerator GetOutSpaceship()
     {
-        if (_spaceship.isPlayerInSpaceship && Input.GetKeyDown(KeyCode.F))
+        if (_spaceship.isPlayerInSpaceship && Input.GetKeyDown(KeyCode.F) && isSpaceShipOnLand)
         {
             yield return new WaitForSeconds(0.2f);
             
