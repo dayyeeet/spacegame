@@ -10,7 +10,7 @@ public class AlignementBehavior : FilteredFlockBehavior
     {
         if (context.Count == 0)
         {
-            Debug.Log("nnn");
+           
             return Vector3.forward;
         }
 

@@ -17,6 +17,10 @@ public class PhysicsLayerFilter : ContextFilter
             if (mask == (mask| (1 << item.gameObject.layer)))
             {
                 filtered.Add(item);
+                foreach (Transform iem in filtered)
+                {
+                    //Debug.Log(iem.name);
+                }
             }
 
         }

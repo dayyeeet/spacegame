@@ -30,18 +30,5 @@ public class FlockAgentV2 : MonoBehaviour
         transform.forward= velocity;
         transform.position += velocity *Time.deltaTime;
     }
-    //public void FauxGravity(Rigidbody rb)
-    //{
 
-    //   m_gravityAttractor= agentFlock.gravityAttractor;
-    //    m_gravityAttractor.Attract(rb);
-
-    //}
-    //private void OnCollisionStay(Collision collision)
-    //{
-    //    foreach (ContactPoint item in collision.contacts)
-    //    {
-    //        Debug.DrawRay(item.point, item.normal * 10, Color.red);
-    //    }
-    //}
 }

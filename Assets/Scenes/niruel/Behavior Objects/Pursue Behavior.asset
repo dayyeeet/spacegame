@@ -9,9 +9,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b97fe4e9eb50b8645927bdb025ee29f4, type: 3}
-  m_Name: Physics Layer Filter
+  m_Script: {fileID: 11500000, guid: 764023831e1876648b97bf939e308966, type: 3}
+  m_Name: Pursue Behavior
   m_EditorClassIdentifier: 
-  mask:
-    serializedVersion: 2
-    m_Bits: 64
+  Filter: {fileID: 11400000, guid: 3979b2793dd92d246975aa8b0c6db9af, type: 2}

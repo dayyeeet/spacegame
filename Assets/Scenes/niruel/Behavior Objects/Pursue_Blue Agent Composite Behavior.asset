@@ -9,9 +9,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b97fe4e9eb50b8645927bdb025ee29f4, type: 3}
-  m_Name: Physics Layer Filter
+  m_Script: {fileID: 11500000, guid: 052dd7c862f88c14295c831375643add, type: 3}
+  m_Name: Pursue_Blue Agent Composite Behavior
   m_EditorClassIdentifier: 
-  mask:
-    serializedVersion: 2
-    m_Bits: 64
+  behaviors:
+  - {fileID: 11400000, guid: be69b803fd14df242998ce8b5d392181, type: 2}
+  weights:
+  - 1

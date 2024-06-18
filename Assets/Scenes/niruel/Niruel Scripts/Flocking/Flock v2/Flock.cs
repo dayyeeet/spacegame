@@ -8,8 +8,7 @@ public class Flock : MonoBehaviour
     public FlockAgentV2 agentPrefab;
     List<FlockAgentV2> agents = new List<FlockAgentV2>();
     public FlockBehavior behavior;
-    public FauxGravityAttractor gravityAttractor;
-
+    [SerializeField] float YspawnPos =0f;
     public int startCount = 25;
     //make const latter
     //[Range(0f,1f)]
@@ -48,7 +47,7 @@ public class Flock : MonoBehaviour
         {
             Vector2 randCirclePos = Random.insideUnitCircle * startCount * agentDensity;
             
-            Vector3 randPoint = transform.position + new Vector3(randCirclePos.x, transform.position.y+ 282, randCirclePos.y);
+            Vector3 randPoint = transform.position + new Vector3(randCirclePos.x, transform.position.y+ YspawnPos, randCirclePos.y);
             FlockAgentV2 newAgent = Instantiate(
                 agentPrefab,
                 randPoint,

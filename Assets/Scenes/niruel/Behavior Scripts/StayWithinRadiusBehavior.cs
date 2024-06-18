@@ -21,7 +21,7 @@ public class StayWithinRadiusBehavior : FlockBehavior
         }
         if ( context.Count==0)
         {
-            Debug.Log("gh");
+           
             return Vector3.zero;
         }
         Vector3 d = centerOffset *t *t ;
