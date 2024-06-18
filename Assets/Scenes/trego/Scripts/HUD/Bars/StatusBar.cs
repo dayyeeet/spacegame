@@ -1,30 +1,30 @@
+using System;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class StatusBar : MonoBehaviour
-{ 
+{
     public float maxValue = 100f;
     
-    protected float CurrentValue;
+    public float currentValue;
 
-    private Slider _slider;
+    protected Slider Slider;
     
     protected virtual void Start()
     {
-        _slider = GetComponent<Slider>();
-        CurrentValue = maxValue;
-        _slider.maxValue = maxValue;
+        Slider = GetComponent<Slider>();
+        Slider.maxValue = maxValue;
         UpdateBar();
     }
 
-    public void SetValue(float value)
+    protected virtual void SetValue(float value)
     {
-        CurrentValue = value;
+        currentValue = value;
         UpdateBar();
     }
 
     protected void UpdateBar()
     {
-        _slider.value = CurrentValue;
+        Slider.value = currentValue;
     }
 }
