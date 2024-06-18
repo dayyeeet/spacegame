@@ -1,0 +1,36 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7befbb5edffe76443ae29edb75ef6667, type: 3}
+  m_Name: HillPlanet
+  m_EditorClassIdentifier: 
+  planetRadius: 50
+  noiseLayers:
+  - filterType: 0
+    enabled: 1
+    useFirstLayerAsMask: 0
+    strength: 0.3
+    numLayers: 2
+    minValue: 0
+    baseRoughness: 0.99
+    persistence: -0.14
+    roughness: 0.49
+    centre: {x: 0, y: 0, z: 0}
+  - filterType: 1
+    enabled: 1
+    useFirstLayerAsMask: 0
+    strength: 0.36
+    numLayers: 2
+    minValue: 3.04
+    baseRoughness: 2.07
+    persistence: 1.38
+    roughness: -1.12
+    centre: {x: 0, y: 0, z: 0}

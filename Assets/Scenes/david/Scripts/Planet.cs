@@ -28,7 +28,8 @@ public class Planet : MonoBehaviour
     public void Populate()
     {
         _featureGenerator.UpdateSettings(featureSettings);
-        _featureGenerator.Populate(this);
+        foreach(var face in _terrainFaces)
+            _featureGenerator.Populate(this, face);
     }
 
     void Initialize()
