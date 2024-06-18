@@ -8,7 +8,8 @@ using UnityEngine.SceneManagement;
 public class Spaceship : MonoBehaviour
 {
     [Tooltip("Is player controls the spaceship")]
-    [SerializeField] private bool isPlayerInSpaceship;
+    // [SerializeField] private bool isPlayerInSpaceship;
+    public bool isPlayerInSpaceship;
 
     [SerializeField] private float forwardSpeed = 25f;
     [SerializeField] private float strafeSpeed = 7.5f;
