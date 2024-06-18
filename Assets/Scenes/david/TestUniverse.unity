@@ -601,7 +601,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   seed: -1561406940
   randomSeed: 0
-  minCoordsDistance: 864.00006
+  minCoordsDistance: 480.00003
   coordsMultiplier: 1.2
   materialSettings: {fileID: 11400000, guid: 468970d85edb04f4ab4184d56232318a, type: 2}
   shapePrefabs:
