@@ -94,7 +94,7 @@ GameObject:
   - component: {fileID: 6710992839535792442}
   - component: {fileID: 4446322882416735447}
   - component: {fileID: 3473144751610717199}
-  - component: {fileID: -2574757560551558950}
+  - component: {fileID: 6021199562617174706}
   m_Layer: 0
   m_Name: FlockAgent_Blue
   m_TagString: Untagged
@@ -131,6 +131,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3468225b1a1fae24088e016fb6dd6509, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  rb: {fileID: 0}
 --- !u!65 &3473144751610717199
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -152,7 +153,7 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0.44, z: 0}
---- !u!54 &-2574757560551558950
+--- !u!54 &6021199562617174706
 Rigidbody:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

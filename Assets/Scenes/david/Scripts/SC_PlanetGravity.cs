@@ -15,7 +15,7 @@ public class SC_PlanetGravity : MonoBehaviour
             planet = GameObject.FindAnyObjectByType<Planet>();
             if (planet != null)
             {
-                Debug.Log("reeeeeeeee");
+                //Debug.Log("reeeeeeeee");
             }
         }
     }

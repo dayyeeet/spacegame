@@ -22,13 +22,13 @@ public class AvoidanceBehavior : FilteredFlockBehavior
         foreach (Transform t in filteredContex)
         {
             Vector3 closestPoint = t.gameObject.GetComponent<Collider>().ClosestPoint(agent.transform.position);
-            Debug.DrawLine(agent.transform.position,closestPoint,Color.magenta);
+            //Debug.DrawLine(agent.transform.position,closestPoint,Color.magenta);
             if (Vector3.SqrMagnitude(closestPoint - agent.transform.position)< flock.squareAviodanceRadius)
             {
                 nAvoid++;
                 avoidanceMove += agent.transform.position- closestPoint;
             }
-            Debug.Log(t.name);
+            //Debug.Log(t.name);
             
         }
         if (nAvoid > 0)

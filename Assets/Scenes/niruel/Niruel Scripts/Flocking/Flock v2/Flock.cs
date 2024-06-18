@@ -42,22 +42,44 @@ public class Flock : MonoBehaviour
         squareMaxSpeed= SqaureTheValue(maxSpeed);
         squareNeighborRadius = SqaureTheValue(neighborRadis);
         m_squareAviodanceRadius = squareNeighborRadius* SqaureTheValue(avoidanceRadiusMultiplier);
-        
-        for (int i = 0; i < startCount; i++)
+        //for (int i = 0; i < startCount; i++)
+        //{
+        //    Vector2 randCirclePos = Random.insideUnitCircle * startCount * agentDensity;
+
+        //    Vector3 randPoint = transform.position + new Vector3(randCirclePos.x, transform.position.y + YspawnPos, randCirclePos.y);
+        //    FlockAgentV2 newAgent = Instantiate(
+        //        agentPrefab,
+        //        randPoint,
+        //        Quaternion.Euler(Vector3.up * Random.Range(0f, 360f)),
+        //        transform
+        //        );
+        //    newAgent.name = "Agent" + i;
+        //    newAgent.Init(this);
+        //    agents.Add(newAgent);
+        //}
+
+
+        StartCoroutine(Spawn());
+    }
+    IEnumerator Spawn()
+    {
+        while (agents.Count<startCount)
         {
+            yield return new WaitForSeconds(2f);
             Vector2 randCirclePos = Random.insideUnitCircle * startCount * agentDensity;
-            
-            Vector3 randPoint = transform.position + new Vector3(randCirclePos.x, transform.position.y+ YspawnPos, randCirclePos.y);
+
+            Vector3 randPoint = Vector3.zero + new Vector3(randCirclePos.x, transform.position.y + YspawnPos, randCirclePos.y);
             FlockAgentV2 newAgent = Instantiate(
                 agentPrefab,
                 randPoint,
-                Quaternion.Euler(Vector3.up* Random.Range(0f,360f)),
+                Quaternion.Euler(Vector3.up * Random.Range(0f, 360f)),
                 transform
                 );
-            newAgent.name = "Agent" + i;
+            // newAgent.name = "Agent" + i;
             newAgent.Init(this);
             agents.Add(newAgent);
         }
+        
     }
 
     // Update is called once per frame
@@ -90,7 +112,6 @@ public class Flock : MonoBehaviour
                 contex.Add(c.transform);
             }
         }
-        //Debug.Log(contex.Count);
         return contex;
 
     }

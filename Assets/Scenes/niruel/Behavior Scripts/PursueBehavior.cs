@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.SceneManagement;
 using UnityEngine;
 
 
@@ -16,28 +17,26 @@ public class PursueBehavior : FilteredFlockBehavior
             return Vector3.zero;
         }
 
-        Vector3 cohesionMove = Vector3.zero;
+        Vector3 moveToPlayer = Vector3.zero;
+        Vector3 moveFromPlayer = Vector3.zero;
         List<Transform> filteredContex = (Filter == null) ? context : Filter.filter(agent, context);
         //Debug.Log(filteredContex);
         foreach (Transform t in filteredContex)
         {
+            
             //Vector3 closestPoint = t.gameObject.GetComponent<Collider>().ClosestPoint(agent.transform.position);
             Debug.DrawLine(agent.transform.position, t.position,Color.red);
-            if (Vector3.Distance(agent.transform.position, t.position) > 1f)
+            float distance = Vector3.Distance(agent.transform.position, t.position);
+            //Debug.Log(distance);
+            if (distance > 1.2f)
             {
-                cohesionMove = t.position - agent.transform.position;
-                cohesionMove = Vector3.SmoothDamp(agent.transform.forward, cohesionMove, ref currentVelocity, agentSmoothTime);
+               moveToPlayer = t.position - agent.transform.position;
+                moveToPlayer = Vector3.SmoothDamp(agent.transform.forward, moveToPlayer, ref currentVelocity, agentSmoothTime);
             }
-
-            Debug.Log(t.name);
+            
+           
         }
-        //Debug.Log(cohesionMove);
-        //cohesionMove /= context.Count;
-
-        ////create offset
-        //cohesionMove -= agent.transform.position;
-        
-        return cohesionMove;
+        return moveToPlayer;
 
     }
-    }
+}
