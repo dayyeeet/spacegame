@@ -18,7 +18,7 @@ public class Spaceship : MonoBehaviour
     private float forwardAcceleration = 2.5f, strafeAcceleration = 2f, hoverAcceleration = 2f;
 
     [SerializeField] private float lookRateSpeed = 90f;
-    private Vector2 lookInput, screenCenter, mouseDistance;
+    private Vector2 mouseInput, screenCenter, mouseDistance;
 
     private float rollInput;
     [SerializeField] private float rollSpeed = 90f;
@@ -28,7 +28,7 @@ public class Spaceship : MonoBehaviour
 
     private void Awake()
     {
-        Cursor.visible = false;
+        Cursor.visible = true;
         Cursor.lockState = CursorLockMode.Confined;
         this.spaceShipMovementEvent = this.GetComponent<SpaceShipMovementEvent>();
     }
@@ -58,9 +58,9 @@ public class Spaceship : MonoBehaviour
 
         if (this.isPlayerInSpaceship)
         {
-            this.lookInput = Input.mousePosition;
-            this.mouseDistance.x = (lookInput.x - this.screenCenter.x) / this.screenCenter.y;
-            this.mouseDistance.y = (lookInput.y - this.screenCenter.y) / this.screenCenter.y;
+            this.mouseInput = Input.mousePosition;
+            this.mouseDistance.x = (mouseInput.x - this.screenCenter.x) / this.screenCenter.y;
+            this.mouseDistance.y = (mouseInput.y - this.screenCenter.y) / this.screenCenter.y;
             this.mouseDistance = Vector2.ClampMagnitude(this.mouseDistance, 1f);
 
             this.rollInput = Mathf.Lerp(this.rollInput, rollInput, this.rollAcceleration * Time.deltaTime);
