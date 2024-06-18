@@ -31,9 +31,13 @@ public class GetInAndOutSpaceship : MonoBehaviour
     {
         isSpaceShipOnLand =
             (planetGameObject.transform.position - _spaceship.gameObject.transform.position).magnitude <= 55;
-        Debug.Log((planetGameObject.transform.position - _spaceship.gameObject.transform.position).magnitude);
+        // Debug.Log((planetGameObject.transform.position - _spaceship.gameObject.transform.position).magnitude);
         StartCoroutine(GetInSpaceship());
-        StartCoroutine(GetOutSpaceship());
+        if (_spaceship.isPlayerInSpaceship && Input.GetKeyDown(KeyCode.F) && isSpaceShipOnLand)
+        {
+            StartCoroutine(GetOutSpaceship());
+        }
+        
     }
 
     private IEnumerator GetInSpaceship()
@@ -52,22 +56,23 @@ public class GetInAndOutSpaceship : MonoBehaviour
             Cursor.lockState = CursorLockMode.Confined;
         }
     }
-    private IEnumerator GetOutSpaceship()
+    public IEnumerator GetOutSpaceship()
     {
-        if (_spaceship.isPlayerInSpaceship && Input.GetKeyDown(KeyCode.F) && isSpaceShipOnLand)
+        if (!_spaceship.isPlayerInSpaceship)
         {
-            yield return new WaitForSeconds(0.2f);
-            
-            _playerMesh.enabled = true; 
-            _playerController.enabled = true;
-            _playerCamera.gameObject.SetActive(true);
-                     
-            _spaceship.isPlayerInSpaceship = false; 
-            spaceshipCamera.gameObject.SetActive(false);
-
-            playerGameObject.transform.position = _spaceship.transform.localPosition + new Vector3(5, 0);
-            
-            Cursor.lockState = CursorLockMode.Locked;
+            yield break;
         }
+        yield return new WaitForSeconds(0.2f);
+            
+        _playerMesh.enabled = true;
+        _playerController.enabled = true;
+        _playerCamera.gameObject.SetActive(true);
+                     
+        _spaceship.isPlayerInSpaceship = false; 
+        spaceshipCamera.gameObject.SetActive(false);
+
+        playerGameObject.transform.position = _spaceship.transform.localPosition + new Vector3(5, 0);
+            
+        Cursor.lockState = CursorLockMode.Locked;
     }
 }

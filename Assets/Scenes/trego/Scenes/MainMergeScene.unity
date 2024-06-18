@@ -7308,6 +7308,8 @@ GameObject:
   - component: {fileID: 840323547}
   - component: {fileID: 840323546}
   - component: {fileID: 840323545}
+  - component: {fileID: 840323549}
+  - component: {fileID: 840323550}
   m_Layer: 0
   m_Name: Spaceshipt
   m_TagString: Untagged
@@ -7390,6 +7392,34 @@ Transform:
   - {fileID: 1850438170}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: -90, z: 0}
+--- !u!114 &840323549
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 840323543}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: efb1fa2af3b35d746bf7c51e107ccd1a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  planetGameObject: {fileID: 2116301233}
+  landingSpeed: 0
+--- !u!114 &840323550
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 840323543}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dab37321d6807f847bbd038aa1b9bd62, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  planet: {fileID: 0}
+  alignToPlanet: 1
 --- !u!1 &840359351
 GameObject:
   m_ObjectHideFlags: 0
@@ -10129,6 +10159,20 @@ MonoBehaviour:
   spaceshipCamera: {fileID: 1850438174}
   isSpaceShipOnLand: 0
   planetGameObject: {fileID: 2116301230}
+--- !u!114 &1164865743
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1164865737}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: efb1fa2af3b35d746bf7c51e107ccd1a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  planetGameObject: {fileID: 2116301233}
+  landingSpeed: 0
 --- !u!1 &1172640579
 GameObject:
   m_ObjectHideFlags: 0
@@ -18707,6 +18751,10 @@ PrefabInstance:
         type: 3}
       insertIndex: -1
       addedObject: {fileID: 1164865742}
+    - targetCorrespondingSourceObject: {fileID: 1247619388254216, guid: 873baea37cdd7424c83ba02ad24c23b2,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1164865743}
   m_SourcePrefab: {fileID: 100100000, guid: 873baea37cdd7424c83ba02ad24c23b2, type: 3}
 --- !u!1 &1979398213
 GameObject:
