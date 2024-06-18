@@ -1,6 +1,8 @@
+    using Unity.VisualScripting;
     using UnityEngine;
+    using UnityEngine.Serialization;
 
-[RequireComponent(typeof(Rigidbody))]
+    [RequireComponent(typeof(Rigidbody))]
 [RequireComponent(typeof(CapsuleCollider))]
 
 public class SC_RigidbodyPlayerMovement : MonoBehaviour
@@ -29,8 +31,18 @@ public class SC_RigidbodyPlayerMovement : MonoBehaviour
     public float lookSpeed = 2.0f;
     public float lookXLimit = 60.0f;
 
-    public MovementState state;
-    public enum MovementState
+    [Header("HP")] 
+    private float hp = 100.0f;
+    private float vyCache;
+    public float hpImpactThreshold = 2000.0f;
+    public float hpSmallBruises = 3000.0f;
+    public float hpNormalInjuries = 5000.0f;
+    public float hpSeriousInjuries = 8000.0f;
+    public float hpFatalInjuries = 10000.0f;
+    public float hpDeath = 15000.0f;
+
+    private MovementState state;
+    private enum MovementState
     {
         walking,
         sprinting,
@@ -70,13 +82,14 @@ public class SC_RigidbodyPlayerMovement : MonoBehaviour
        
         StateHandler();
 
-        SprintTime();
-    }
+        }
 
     void FixedUpdate()
     {
+        SprintTime();
         MovePlayer();
-    }
+        vyCache = r.velocity.y;
+       }
     
     private void StateHandler()
     {
@@ -172,6 +185,48 @@ public class SC_RigidbodyPlayerMovement : MonoBehaviour
         }
     }
 
+    void OnCollisionEnter(Collision col)
+    {
+        if (Vector3.Dot(col.GetContact(0).normal, Vector3.up) < 0.5f)
+        {
+            if (r.velocity.y < -0.5f)
+            {
+                r.velocity = Vector3.up * r.velocity.y;
+                return;
+            }
+        }
+
+        float acceleration = (r.velocity.y - vyCache) / Time.fixedDeltaTime;
+        float impactForce = r.mass * Mathf.Abs(acceleration);
+
+        float hpDamage = CalculateDamage(impactForce);
+        
+        hp -= hpDamage;
+        Debug.Log("Der Spieler hat Schaden erhalten: " + hpDamage + " ImpactForce war " + impactForce);
+    }
+    
+    float CalculateDamage(float impactForce)
+    {
+        if (impactForce < hpImpactThreshold)
+            return 0; // No damage
+        else if (impactForce < hpSmallBruises)
+            return Mathf.Round((float)Mathf.Lerp(1, 10,
+                (impactForce - hpImpactThreshold) / (hpSmallBruises - hpImpactThreshold)) * 10.0f) * 0.1f;
+        else if (impactForce < hpNormalInjuries)
+            return Mathf.Round((float)Mathf.Lerp(10, 20,
+                (impactForce - hpSmallBruises) / (hpNormalInjuries - hpSmallBruises)) * 10.0f) * 0.1f;
+        else if (impactForce < hpSeriousInjuries)
+            return Mathf.Round((float)Mathf.Lerp(20, 50,
+                (impactForce - hpNormalInjuries) / (hpSeriousInjuries - hpNormalInjuries)) * 10.0f) * 0.1f;
+        else if (impactForce < hpFatalInjuries)
+            return Mathf.Round((float)Mathf.Lerp(50, 80,
+                (impactForce - hpSeriousInjuries) / (hpFatalInjuries - hpSeriousInjuries)) * 10.0f) * 0.1f;
+        else if (impactForce < hpDeath)
+            return Mathf.Round((float)Mathf.Lerp(80, 100,
+                (impactForce - hpFatalInjuries) / (hpDeath - hpFatalInjuries)) * 10.0f) * 0.1f;
+        else
+            return 100; // Death
+    }
     void OnCollisionStay()
     {
         grounded = true;
