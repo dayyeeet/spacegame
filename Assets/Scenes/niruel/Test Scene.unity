@@ -141,7 +141,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 2147483647
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!65 &30068583
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -246,7 +246,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 2147483647
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!65 &222328361
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -369,7 +369,7 @@ MonoBehaviour:
   startCount: 1
   driveFactor: 10
   maxSpeed: 3
-  neighborRadis: 1.5
+  neighborRadis: 7.7
   avoidanceRadiusMultiplier: 0.7
 --- !u!4 &254539012
 Transform:
@@ -472,8 +472,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 330585543}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.000011820344, y: -0.9492957, z: 0.3143847, w: -0.000024361532}
-  m_LocalPosition: {x: -9.609543, y: 57.407288, z: 84.035484}
+  m_LocalRotation: {x: -0.19786431, y: -0.07659951, z: 0.01563439, w: -0.9771069}
+  m_LocalPosition: {x: 7.2503147, y: 3.5943413, z: -21.476387}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1090,7 +1090,7 @@ Rigidbody:
     m_Bits: 0
   m_ImplicitCom: 1
   m_ImplicitTensor: 1
-  m_UseGravity: 0
+  m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 4
