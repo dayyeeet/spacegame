@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class TerrainFace
 {
-    private readonly Mesh _mesh;
+    public readonly Mesh mesh;
     private readonly int _resolution;
     private readonly Vector3 _localUp;
     private readonly Vector3 _axisA;
@@ -12,7 +12,7 @@ public class TerrainFace
     public TerrainFace(ShapeGenerator generator, Mesh mesh, int resolution, Vector3 localUp)
     {
         _generator = generator;
-        _mesh = mesh;
+        this.mesh = mesh;
         _resolution = resolution;
         _localUp = localUp;
         _axisA = new Vector3(localUp.y, localUp.z, localUp.x);
@@ -24,7 +24,7 @@ public class TerrainFace
         var vertices = new Vector3[_resolution * _resolution];
         var triangles = new int[(_resolution - 1) * (_resolution - 1) * 6];
         var triIndex = 0;
-        var uv = (_mesh.uv.Length == vertices.Length) ? _mesh.uv : new Vector2[vertices.Length];
+        var uv = (mesh.uv.Length == vertices.Length) ? mesh.uv : new Vector2[vertices.Length];
 
         for (var y = 0; y < _resolution; y++)
         {
@@ -51,10 +51,10 @@ public class TerrainFace
             }
         }
 
-        _mesh.Clear();
-        _mesh.vertices = vertices;
-        _mesh.triangles = triangles;
-        _mesh.RecalculateNormals();
-        _mesh.uv = uv;
+        mesh.Clear();
+        mesh.vertices = vertices;
+        mesh.triangles = triangles;
+        mesh.RecalculateNormals();
+        mesh.uv = uv;
     }
 }
