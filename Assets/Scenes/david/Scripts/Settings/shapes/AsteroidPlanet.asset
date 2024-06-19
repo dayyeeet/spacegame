@@ -17,7 +17,7 @@ MonoBehaviour:
   - filterType: 0
     enabled: 1
     useFirstLayerAsMask: 0
-    strength: 0.39
+    strength: 0.21
     numLayers: 2
     minValue: 0.41
     baseRoughness: 0.43
