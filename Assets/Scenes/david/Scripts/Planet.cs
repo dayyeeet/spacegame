@@ -1,3 +1,6 @@
+using System;
+using System.Collections;
+using System.Threading.Tasks;
 using UnityEngine;
 
 public class Planet : MonoBehaviour
@@ -9,6 +12,7 @@ public class Planet : MonoBehaviour
     public bool autoUpdate = true;
     public string planetName;
     public int seed;
+    public bool featuresGenerated = false;
 
     public ShapeSettings shapeSettings;
     public ColorSettings colorSettings;
@@ -33,6 +37,17 @@ public class Planet : MonoBehaviour
         _featureGenerator.UpdateSettings(featureSettings);
         foreach(var face in _terrainFaces)
             _featureGenerator.Populate(this, face);
+        featuresGenerated = true;
+    }
+
+    public void ShowFeatures()
+    {
+        _featureGenerator.Show(this);
+    }
+    
+    public void HideFeatures()
+    {
+        _featureGenerator.Hide(this);
     }
 
     void Initialize()
@@ -73,7 +88,6 @@ public class Planet : MonoBehaviour
             }
 
             meshFilters[i].GetComponent<MeshRenderer>().sharedMaterial = colorSettings.planetMaterial;
-
             _terrainFaces[i] = new TerrainFace(_shapeGenerator, meshFilters[i].sharedMesh, resolution, directions[i]);
         }
     }
@@ -111,6 +125,16 @@ public class Planet : MonoBehaviour
             face.ConstructMesh();
         }
 
+        foreach (var obj in FindObjectsByType<GameObject>(FindObjectsSortMode.InstanceID))
+        {
+            if (obj.name == "mesh")
+            {
+                var collider = obj.GetComponent<MeshCollider>();
+                collider.sharedMesh.RecalculateBounds();
+                collider.convex = false;
+                collider.enabled = true;
+            }
+        }
         _colorGenerator.UpdateElevation(_shapeGenerator.elevationMinMax);
     }
 

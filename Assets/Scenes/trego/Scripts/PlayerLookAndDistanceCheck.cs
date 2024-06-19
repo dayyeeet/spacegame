@@ -1,5 +1,3 @@
-using System;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class PlayerLookAndDistanceCheck : MonoBehaviour
@@ -8,6 +6,7 @@ public class PlayerLookAndDistanceCheck : MonoBehaviour
     public float maxInteractionDistance = 3f; // Maximum distance to interact with objects
 
     [SerializeField] private ItemConverterOnPlayer itemConverterOnPlayer;
+    [SerializeField] private GameObject fPickupText;
 
     private Outline _outline;
 
@@ -32,19 +31,23 @@ public class PlayerLookAndDistanceCheck : MonoBehaviour
                 if (_outline.enabled == false)
                 {
                     _outline.enabled = true;
+                    fPickupText.SetActive(true);
                 }
-
+                
                 if (Input.GetKeyDown(KeyCode.F))
                 {
                     Destroy(hit.collider.gameObject);
                     itemConverterOnPlayer.GetFuel(5f);
+                    fPickupText.SetActive(false);
                 }
             }
         }
         else
         {
+            fPickupText.SetActive(false);
+            if (_outline == null) return;
             // If no object is hit by the ray or it's too far away, disable the outline
-            if (_outline.enabled == true)
+            if (_outline.enabled)
             {
                 _outline.enabled = false;
             }

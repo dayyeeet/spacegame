@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using Unity.VisualScripting.Dependencies.NCalc;
 using UnityEngine;
 
 public class FeatureGenerator
@@ -16,6 +17,20 @@ public class FeatureGenerator
         _settings = settings;
     }
 
+    public void Show(Planet planet)
+    {
+        var populationObj = planet.GetObjectByName("features");
+        if (populationObj == null) return;
+        populationObj.SetActive(true);
+    }
+
+    public void Hide(Planet planet)
+    {
+        var populationObj = planet.GetObjectByName("features");
+        if (populationObj == null) return;
+        populationObj.SetActive(false);
+    }
+
     public void Populate(Planet planet, TerrainFace face)
     {
         Random.InitState(_seed);
@@ -23,6 +38,7 @@ public class FeatureGenerator
         if (populationObj == null)
         {
             populationObj = new GameObject("features");
+            populationObj.SetActive(false);
             populationObj.transform.parent = planet.transform;
             populationObj.transform.position = planet.transform.position;
         }
@@ -83,6 +99,16 @@ public class FeatureGenerator
         var center = obj.transform.position - planet.transform.position;
         obj.transform.up = center;
         obj.transform.parent = parent.transform;
+        if (feature.isCollidable)
+        {
+            var meshFilter = obj.GetComponent<MeshFilter>();
+            if (meshFilter != null)
+            {
+                var newCollider = obj.AddComponent<MeshCollider>();
+                newCollider.sharedMesh = meshFilter.sharedMesh;
+                obj.layer = 6;
+            }
+        }
         populated.Add(point, feature);
     }
 

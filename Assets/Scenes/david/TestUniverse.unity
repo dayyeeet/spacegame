@@ -462,7 +462,7 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1551285849}
   serializedVersion: 4
-  m_Mass: 1
+  m_Mass: 100
   m_Drag: 0
   m_AngularDrag: 0.05
   m_CenterOfMass: {x: 0, y: 0, z: 0}
@@ -563,7 +563,7 @@ Transform:
   m_GameObject: {fileID: 1551285849}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 272.7, y: 222.1, z: 407.97}
+  m_LocalPosition: {x: 856.2, y: 211.7, z: -118.7}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -599,9 +599,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 82a6df44e1e09ba4e8584c8610e901f3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  seed: -1561406940
-  randomSeed: 0
-  minCoordsDistance: 864.00006
+  seed: 1638439692
+  randomSeed: 1
+  minCoordsDistance: 1248.0001
   coordsMultiplier: 1.2
   materialSettings: {fileID: 11400000, guid: 468970d85edb04f4ab4184d56232318a, type: 2}
   shapePrefabs:

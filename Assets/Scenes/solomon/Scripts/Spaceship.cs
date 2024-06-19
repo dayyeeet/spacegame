@@ -8,7 +8,8 @@ using UnityEngine.SceneManagement;
 public class Spaceship : MonoBehaviour
 {
     [Tooltip("Is player controls the spaceship")]
-    [SerializeField] private bool isPlayerInSpaceship;
+    // [SerializeField] private bool isPlayerInSpaceship;
+    public bool isPlayerInSpaceship;
 
     [SerializeField] private float forwardSpeed = 25f;
     [SerializeField] private float strafeSpeed = 7.5f;
@@ -28,7 +29,7 @@ public class Spaceship : MonoBehaviour
 
     private void Awake()
     {
-        Cursor.visible = true;
+        Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Confined;
         this.spaceShipMovementEvent = this.GetComponent<SpaceShipMovementEvent>();
     }

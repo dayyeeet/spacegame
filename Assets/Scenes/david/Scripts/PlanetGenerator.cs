@@ -1,6 +1,8 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -15,18 +17,44 @@ public class PlanetGenerator : MonoBehaviour
     private PlanetNameGenerator _nameGenerator;
 
     public ColorSettings materialSettings;
-
+    public GameObject spaceShipReference;
+    
     public ShapeSettings[] shapePrefabs;
     public FeatureSettings[] featurePrefabs;
     private bool _isInitialSeed = false;
+    
+    private readonly Dictionary<Vector3, Planet> _generated = new();
 
     private void Start()
     {
         ReseedGenerator();
         ResetEverything();
+        GeneratePlanets();
     }
-    
-    private readonly Dictionary<Vector3, Planet> _generated = new();
+
+    private void Update()
+    {
+        var position = spaceShipReference.transform.position;
+        _generated.ToList()
+            .FindAll(value => Vector3.Distance(position, value.Key) <= 120f + value.Value.shapeSettings.planetRadius && !value.Value.featuresGenerated)
+            .ForEach(planet => planet.Value.Populate());
+        foreach (var key in _generated)
+        {
+            if (Vector3.Distance(position, key.Key) <= 20f + key.Value.shapeSettings.planetRadius)
+            {
+                key.Value.ShowFeatures();
+            }
+            else
+            {
+                key.Value.HideFeatures();
+            }
+        }
+
+        if (Vector3.Distance(position, Vector3.zero) > minCoordsDistance)
+        {
+            GeneratePlanets();
+        }
+    }
 
     private void Reseed(int? newSeedOrEmpty = null)
     {
@@ -66,6 +94,7 @@ public class PlanetGenerator : MonoBehaviour
             OnReseed();
             _isInitialSeed = false;
         }
+
         if (_nameGenerator == null) return;
         for (var i = 0; i < Random.Range(5, 10); i++)
         {
