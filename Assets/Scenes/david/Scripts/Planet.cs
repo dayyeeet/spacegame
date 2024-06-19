@@ -1,6 +1,3 @@
-using System;
-using System.Collections;
-using System.Threading.Tasks;
 using UnityEngine;
 
 public class Planet : MonoBehaviour
@@ -35,7 +32,7 @@ public class Planet : MonoBehaviour
     {
         _featureGenerator.UpdateSeed(seed);
         _featureGenerator.UpdateSettings(featureSettings);
-        foreach(var face in _terrainFaces)
+        foreach (var face in _terrainFaces)
             _featureGenerator.Populate(this, face);
         featuresGenerated = true;
     }
@@ -44,7 +41,7 @@ public class Planet : MonoBehaviour
     {
         _featureGenerator.Show(this);
     }
-    
+
     public void HideFeatures()
     {
         _featureGenerator.Hide(this);
@@ -66,6 +63,7 @@ public class Planet : MonoBehaviour
             gravity = GameObject.CreatePrimitive(PrimitiveType.Sphere);
             gravity.name = "gravity";
         }
+
         gravityObject = gravity;
         DestroyImmediate(gravity.GetComponent<MeshRenderer>());
         gravity.transform.localScale = new Vector3(shapeSettings.planetRadius * 2, shapeSettings.planetRadius * 2,
@@ -135,6 +133,7 @@ public class Planet : MonoBehaviour
                 collider.enabled = true;
             }
         }
+
         _colorGenerator.UpdateElevation(_shapeGenerator.elevationMinMax);
     }
 

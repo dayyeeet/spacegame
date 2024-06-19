@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class ColorGenerator
@@ -7,7 +5,7 @@ public class ColorGenerator
     private ColorSettings _settings;
     private Texture2D _texture;
     private const int TextureResolution = 50;
-    
+
     public void UpdateSettings(ColorSettings settings)
     {
         _settings = settings;
@@ -29,11 +27,9 @@ public class ColorGenerator
         {
             colors[i] = _settings.terrainColor.Evaluate(i / (TextureResolution - 1f));
         }
+
         _texture.SetPixels(colors);
         _texture.Apply();
         _settings.planetMaterial.SetTexture("_parentTexture", _texture);
     }
-    
-    
-
 }

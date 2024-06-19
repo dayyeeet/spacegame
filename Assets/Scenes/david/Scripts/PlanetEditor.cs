@@ -1,5 +1,7 @@
+using System;
 using UnityEditor;
 using UnityEngine;
+using Object = UnityEngine.Object;
 
 [CustomEditor(typeof(Planet))]
 public class PlanetEditor : Editor
@@ -31,7 +33,7 @@ public class PlanetEditor : Editor
         DrawSettingsEditor(_planet.colorSettings, _planet.OnColorSettingsUpdated);
     }
 
-    void DrawSettingsEditor(Object settings, System.Action onSettingsUpdated)
+    void DrawSettingsEditor(Object settings, Action onSettingsUpdated)
     {
         using (var check = new EditorGUI.ChangeCheckScope())
         {

@@ -12,11 +12,7 @@ public class SC_PlanetGravity : MonoBehaviour
         r = GetComponent<Rigidbody>();
         if (planet == null)
         {
-            planet = GameObject.FindAnyObjectByType<Planet>();
-            if (planet != null)
-            {
-                //Debug.Log("reeeeeeeee");
-            }
+            planet = FindAnyObjectByType<Planet>();
         }
     }
 

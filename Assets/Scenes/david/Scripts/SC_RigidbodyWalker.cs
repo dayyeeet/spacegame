@@ -2,7 +2,6 @@ using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody))]
 [RequireComponent(typeof(SphereCollider))]
-
 public class SC_RigidbodyWalker : MonoBehaviour
 {
     public float speed = 15.0f;
@@ -47,7 +46,8 @@ public class SC_RigidbodyWalker : MonoBehaviour
             // Calculate how fast we should be moving
             Vector3 forwardDir = Vector3.Cross(transform.up, -playerCamera.transform.right).normalized;
             Vector3 rightDir = Vector3.Cross(transform.up, playerCamera.transform.forward).normalized;
-            Vector3 targetVelocity = (forwardDir * Input.GetAxis("Vertical") + rightDir * Input.GetAxis("Horizontal")) * speed;
+            Vector3 targetVelocity = (forwardDir * Input.GetAxis("Vertical") + rightDir * Input.GetAxis("Horizontal")) *
+                                     speed;
 
             Vector3 velocity = transform.InverseTransformDirection(r.velocity);
             velocity.y = 0;

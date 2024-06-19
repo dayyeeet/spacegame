@@ -14,17 +14,18 @@ public class PlanetGeneratorEditor : Editor
         {
             _generator.GeneratePlanets();
         }
-        
+
         if (GUILayout.Button("Reseed"))
         {
             _generator.ReseedGenerator();
         }
-        
+
         if (GUILayout.Button("Reset"))
         {
             _generator.ResetEverything();
         }
     }
+
     private void OnEnable()
     {
         _generator = (PlanetGenerator)target;
