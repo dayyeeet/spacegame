@@ -6,9 +6,10 @@ public class Flock : MonoBehaviour
 {
 
     public FlockAgentV2 agentPrefab;
+    public Planet planet;
     List<FlockAgentV2> agents = new List<FlockAgentV2>();
     public FlockBehavior behavior;
-    [SerializeField] float YspawnPos =0f;
+    [SerializeField] public float YspawnPos =0f;
     public int startCount = 25;
     //make const latter
     //[Range(0f,1f)]
@@ -66,15 +67,21 @@ public class Flock : MonoBehaviour
         while (agents.Count<startCount)
         {
             yield return new WaitForSeconds(2f);
-            Vector2 randCirclePos = Random.insideUnitCircle * startCount * agentDensity;
+            // Vector2 randCirclePos = Random.insideUnitCircle * startCount * agentDensity;
 
-            Vector3 randPoint = Vector3.zero + new Vector3(randCirclePos.x, transform.position.y + YspawnPos, randCirclePos.y);
+            Vector3 randPoint = new Vector3(0, transform.position.y + YspawnPos, 0);
             FlockAgentV2 newAgent = Instantiate(
                 agentPrefab,
                 randPoint,
                 Quaternion.Euler(Vector3.up * Random.Range(0f, 360f)),
                 transform
                 );
+            newAgent.transform.localPosition = randPoint;
+            var gravity = newAgent.GetComponent<SC_PlanetGravity>();
+            if (gravity != null)
+            {
+                gravity.planet = planet;
+            }
             // newAgent.name = "Agent" + i;
             newAgent.Init(this);
             agents.Add(newAgent);

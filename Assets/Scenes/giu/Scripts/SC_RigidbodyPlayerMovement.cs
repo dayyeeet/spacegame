@@ -218,7 +218,7 @@ public class SC_RigidbodyPlayerMovement : MonoBehaviour
 
     void OnCollisionStay(Collision collision)
     {
-        foreach (ContactPoint contact in collision.contacts)
+        /** foreach (ContactPoint contact in collision.contacts)
         {
             // Check if the contact point is within the ground layer and the normal is upwards
             if (Vector3.Dot(contact.normal, Vector3.up) > 0.5f)
@@ -228,7 +228,8 @@ public class SC_RigidbodyPlayerMovement : MonoBehaviour
             }
         }
 
-        grounded = false; // If no valid ground contacts, grounded is false
+        grounded = false; // If no valid ground contacts, grounded is false */
+        grounded = true;
     }
 
     public void takeDamage(float hpDamage)

@@ -2179,6 +2179,9 @@ MonoBehaviour:
   - {fileID: 11400000, guid: daade3532fb83014f854b6001e588647, type: 2}
   - {fileID: 11400000, guid: bb11886ffdc307246911ff6b41f27d32, type: 2}
   - {fileID: 11400000, guid: c570c6d86eb594b48b442ccade4c9ef8, type: 2}
+  flockBehavior: {fileID: 11400000, guid: 5156b9ba495724d45bd46e6573558d36, type: 2}
+  flockPrefabs:
+  - {fileID: 5897793356877160063, guid: d37545d0de56dcd4fad862d75d78b21c, type: 3}
 --- !u!4 &2043597688
 Transform:
   m_ObjectHideFlags: 0

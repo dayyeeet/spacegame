@@ -19,6 +19,8 @@ public class PlanetGenerator : MonoBehaviour
     
     public ShapeSettings[] shapePrefabs;
     public FeatureSettings[] featurePrefabs;
+    public FlockBehavior flockBehavior;
+    public FlockAgentV2[] flockPrefabs;
     private bool _isInitialSeed = false;
     
     private readonly Dictionary<Vector3, Planet> _generated = new();
@@ -130,6 +132,8 @@ public class PlanetGenerator : MonoBehaviour
         var planet = new GameObject($"planet_{location.x}_{location.y}_{location.z}");
         planet.transform.position = location;
         var component = planet.AddComponent<Planet>();
+        component.flockBehavior = flockBehavior;
+        component.flockPrefabs = flockPrefabs;
         component.resolution = 110;
         component.seed = seed;
         component.planetName = _nameGenerator.GeneratePlanetName();

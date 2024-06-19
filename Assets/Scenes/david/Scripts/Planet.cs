@@ -1,4 +1,6 @@
+using System;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class Planet : MonoBehaviour
 {
@@ -14,6 +16,9 @@ public class Planet : MonoBehaviour
     public ShapeSettings shapeSettings;
     public ColorSettings colorSettings;
     public FeatureSettings featureSettings;
+    public FlockBehavior flockBehavior;
+    public FlockAgentV2[] flockPrefabs;
+    private bool _isFeatureShown;
 
     private readonly ShapeGenerator _shapeGenerator = new ShapeGenerator();
     private readonly ColorGenerator _colorGenerator = new ColorGenerator();
@@ -39,12 +44,24 @@ public class Planet : MonoBehaviour
 
     public void ShowFeatures()
     {
+        if (_isFeatureShown) return;
+        _isFeatureShown = true;
         _featureGenerator.Show(this);
+        foreach (var prefab in flockPrefabs)
+        {
+            InitializeFlock(prefab);
+        }
     }
 
     public void HideFeatures()
     {
+        if (!_isFeatureShown) return;
+        _isFeatureShown = false;
         _featureGenerator.Hide(this);
+        foreach (var prefab in flockPrefabs)
+        {
+            DeleteFlock(prefab);
+        }
     }
 
     void Initialize()
@@ -87,6 +104,38 @@ public class Planet : MonoBehaviour
 
             meshFilters[i].GetComponent<MeshRenderer>().sharedMaterial = colorSettings.planetMaterial;
             _terrainFaces[i] = new TerrainFace(_shapeGenerator, meshFilters[i].sharedMesh, resolution, directions[i]);
+        }
+    }
+
+    private void InitializeFlock(FlockAgentV2 prefab)
+    {
+        var flock = GetObjectByName(prefab.name);
+        if (flock == null)
+        {
+            flock = new GameObject(prefab.name);
+            flock.transform.parent = transform;
+            flock.transform.position = transform.position;
+            var flockScript = flock.AddComponent<Flock>();
+            flockScript.planet = this;
+            flockScript.startCount = Random.Range(5, 26);
+            flockScript.agentPrefab = prefab;
+            flockScript.behavior = flockBehavior;
+            var yPos = new Vector3(0, shapeSettings.planetRadius, 0);
+            var point = _shapeGenerator.GetScaledElevation(_shapeGenerator.CalculateUnscaledElevation(yPos));
+            flockScript.YspawnPos = point + 2;
+            flockScript.driveFactor = Random.Range(8, 11);
+            flockScript.maxSpeed = Random.Range(4, 8);
+            flockScript.neighborRadis = 7;
+            flockScript.avoidanceRadiusMultiplier = 0.7f;
+        }
+    }
+
+    private void DeleteFlock(FlockAgentV2 prefab)
+    {
+        var flock = GetObjectByName(prefab.name);
+        if (flock != null)
+        {
+            DestroyImmediate(flock);
         }
     }
 

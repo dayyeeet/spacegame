@@ -21,7 +21,7 @@ public class FlockAgentV2 : MonoBehaviour
         spideranim = GetComponentInChildren<spiderAnimation>();
         m_SphereCollider = GetComponent<Collider>();
         rb = GetComponent<Rigidbody>();
-        player = GameObject.Find("First Person Playerg");
+        player = GameObject.Find("First Person Player");
         if (player != null)
         {
             //Debug.Log($"player is here with {player.name}");
