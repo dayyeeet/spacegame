@@ -34,7 +34,7 @@ public class GetInAndOutSpaceship : MonoBehaviour
                             (_planet.transform.position - _spaceship.gameObject.transform.position).magnitude <= 55;
         // Debug.Log((planetGameObject.transform.position - _spaceship.gameObject.transform.position).magnitude);
 
-        if ((playerGameObject.transform.position - transform.position).magnitude <= 15 && Input.GetKeyDown(KeyCode.F))
+        if (Vector3.Distance(playerGameObject.transform.position, transform.position) < 5 && (playerGameObject.transform.position - transform.position).magnitude <= 15 && Input.GetKeyDown(KeyCode.F))
         {
             StartCoroutine(GetInSpaceship());
         }

@@ -3,8 +3,8 @@ using UnityEngine;
 public class ItemConverterOnPlayer : MonoBehaviour
 {
     [SerializeField] private PlayerLookAndDistanceCheck playerLookAndDistance;
-    [SerializeField] private FuelBar fuelBar;
-    [SerializeField] private HealthBar healthBar;
+    [SerializeField] private StatusBar fuelBar;
+    [SerializeField] private StatusBar healthBar;
     
     public void GetFuel(float value)
     {

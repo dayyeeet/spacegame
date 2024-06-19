@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7bc411427e8c43f2bcc8c2f05b5fbe92, type: 3}
   m_Name: ForestPlanet
   m_EditorClassIdentifier: 
+  seed: 0
   rockPercent: 0.06
   rocks:
   - {fileID: 11400000, guid: 0168ca8dffb453940b3e0780bcf22c81, type: 2}
@@ -62,3 +63,4 @@ MonoBehaviour:
   groundCover:
   - {fileID: 11400000, guid: f066962e3b43a2d47958d26b02a99113, type: 2}
   - {fileID: 11400000, guid: de64ff2cbffe5f34f968a1bb5a6fb731, type: 2}
+  pickableLayer: 10

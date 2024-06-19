@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7bc411427e8c43f2bcc8c2f05b5fbe92, type: 3}
   m_Name: AlienPlanetFeatures
   m_EditorClassIdentifier: 
+  seed: 0
   rockPercent: 0.06
   rocks:
   - {fileID: 11400000, guid: 0168ca8dffb453940b3e0780bcf22c81, type: 2}
@@ -62,3 +63,4 @@ MonoBehaviour:
     centre: {x: 0, y: 0, z: 0}
   groundCoverPercent: 0
   groundCover: []
+  pickableLayer: 10

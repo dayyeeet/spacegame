@@ -7,4 +7,5 @@ public class GeneratableFeature : ScriptableObject
     public GameObject prefab;
     public bool isGroundCover;
     public bool isCollidable;
+    public bool isPickable;
 }

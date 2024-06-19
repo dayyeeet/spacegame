@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class PlayerLookAndDistanceCheck : MonoBehaviour
@@ -7,6 +8,8 @@ public class PlayerLookAndDistanceCheck : MonoBehaviour
 
     [SerializeField] private ItemConverterOnPlayer itemConverterOnPlayer;
     [SerializeField] private GameObject fPickupText;
+
+    public LayerMask rayCastLayer;
 
     private Outline _outline;
 
@@ -20,10 +23,11 @@ public class PlayerLookAndDistanceCheck : MonoBehaviour
         RaycastHit hit;
         Ray ray = playerCamera.ScreenPointToRay(Input.mousePosition);
 
-        if (Physics.Raycast(ray, out hit, maxInteractionDistance))
+        if (Physics.Raycast(ray, out hit, maxInteractionDistance, rayCastLayer))
         {
             if (hit.collider.CompareTag("Pickable"))
             {
+                Debug.Log("test");
                 // Player is looking directly at the object and within interaction distance
                 _outline = hit.collider.gameObject.GetComponent<Outline>();
                 

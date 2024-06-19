@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7bc411427e8c43f2bcc8c2f05b5fbe92, type: 3}
   m_Name: LifelessPlanet
   m_EditorClassIdentifier: 
+  seed: 0
   rockPercent: 0.04
   rocks:
   - {fileID: 11400000, guid: f96cb2ec3f66d0b4cb22ac30a7abc50d, type: 2}
@@ -58,3 +59,4 @@ MonoBehaviour:
     centre: {x: 33.76, y: 3.54, z: 13.04}
   groundCoverPercent: 0
   groundCover: []
+  pickableLayer: 10

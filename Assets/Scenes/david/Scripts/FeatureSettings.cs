@@ -14,4 +14,5 @@ public class FeatureSettings : ScriptableObject
     public NoiseSettings groundNoise;
     [Range(0f, 1f)] public float groundCoverPercent;
     public GeneratableFeature[] groundCover;
+    public int pickableLayer;
 }

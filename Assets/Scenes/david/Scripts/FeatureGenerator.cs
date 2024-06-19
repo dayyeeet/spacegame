@@ -50,7 +50,7 @@ public class FeatureGenerator
         GenerateFeatureNoisePopulated(noiseGenerationDict, face.mesh.vertices, populated, planet, populationObj);
     }
 
-    private static void GenerateFeatureRandomPopulated(Dictionary<GeneratableFeature[], float> keys, Vector3[] vertices,
+    private void GenerateFeatureRandomPopulated(Dictionary<GeneratableFeature[], float> keys, Vector3[] vertices,
         Dictionary<Vector3, GeneratableFeature> populated, Planet planet, GameObject parent)
     {
         var defaultChance = 0.3f;
@@ -64,13 +64,13 @@ public class FeatureGenerator
                 if (Random.value > chance) continue;
                 if(!IsAvailable(vertice, populated)) continue;
                 var randomFeature = key.Key[Random.Range(0, key.Key.Length)];
-                GenerateFeature(randomFeature, vertice, populated, planet, parent);
+                GenerateFeature(randomFeature, vertice, populated, planet, parent, randomFeature.isPickable);
                 generated = true;
             }
         }
     }
 
-    private static void GenerateFeatureNoisePopulated(Dictionary<GeneratableFeature[], NoiseSettings> keys,
+    private void GenerateFeatureNoisePopulated(Dictionary<GeneratableFeature[], NoiseSettings> keys,
         Vector3[] vertices,
         Dictionary<Vector3, GeneratableFeature> populated, Planet planet, GameObject parent)
     {
@@ -84,14 +84,14 @@ public class FeatureGenerator
                 if (noise.Evaluate(vertice) <= key.Value.minValue) continue;
                 if (!IsAvailable(vertice, populated)) continue;
                 var randomFeature = key.Key[Random.Range(0, key.Key.Length)];
-                GenerateFeature(randomFeature, vertice, populated, planet, parent);
+                GenerateFeature(randomFeature, vertice, populated, planet, parent, false);
                 generated = true;
             }
         }
     }
 
-    private static void GenerateFeature(GeneratableFeature feature, Vector3 point,
-        Dictionary<Vector3, GeneratableFeature> populated, Planet planet, GameObject parent)
+    private void GenerateFeature(GeneratableFeature feature, Vector3 point,
+        Dictionary<Vector3, GeneratableFeature> populated, Planet planet, GameObject parent, bool isPickable)
     {
         var obj = GameObject.Instantiate(feature.prefab);
         obj.transform.position = point + planet.transform.position;
@@ -107,6 +107,16 @@ public class FeatureGenerator
                 newCollider.sharedMesh = meshFilter.sharedMesh;
                 obj.layer = 6;
             }
+        }
+
+        if (isPickable)
+        {
+            var outline = obj.AddComponent<Outline>();
+            outline.enabled = false;
+            obj.tag = "Pickable";
+            var newCollider = obj.AddComponent<BoxCollider>();
+            newCollider.size = new Vector3(1, 1, 1);
+            obj.layer = _settings.pickableLayer;
         }
         populated.Add(point, feature);
     }
