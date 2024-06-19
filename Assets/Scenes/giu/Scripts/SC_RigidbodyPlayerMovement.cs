@@ -50,10 +50,10 @@ public class SC_RigidbodyPlayerMovement : MonoBehaviour
 
     private SC_FallDamage fallDamage;
 
-    public SC_RigidbodyPlayerMovement()
+    private void Start()
     {
         hp = maxHp;
-        fallDamage = new SC_FallDamage();
+        fallDamage = gameObject.AddComponent<SC_FallDamage>();
     }
 
     void Awake()
