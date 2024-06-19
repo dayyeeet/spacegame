@@ -202,7 +202,7 @@ public class SC_RigidbodyPlayerMovement : MonoBehaviour
         float hpDamage = CalculateDamage(impactForce);
         
         hp -= hpDamage;
-        Debug.Log("Der Spieler hat Schaden erhalten: " + hpDamage + " ImpactForce war " + impactForce);
+        //Debug.Log("Der Spieler hat Schaden erhalten: " + hpDamage + " ImpactForce war " + impactForce);
     }
     
     float CalculateDamage(float impactForce)
