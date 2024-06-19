@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Pickable
   - strong
+  - Spaceship
   layers:
   - Default
   - TransparentFX
