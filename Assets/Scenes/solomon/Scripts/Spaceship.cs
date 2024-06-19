@@ -28,8 +28,6 @@ public class Spaceship : MonoBehaviour
 
     private void Awake()
     {
-        Cursor.visible = false;
-        Cursor.lockState = CursorLockMode.Confined;
         this.spaceShipMovementEvent = this.GetComponent<SpaceShipMovementEvent>();
     }
 
@@ -40,17 +38,6 @@ public class Spaceship : MonoBehaviour
 
     void Update()
     {
-        // For testing only
-        if (Input.GetKeyDown(KeyCode.P))
-        {
-            EditorApplication.ExitPlaymode();
-        }
-        // For testing only
-        if (Input.GetKeyDown(KeyCode.R))
-        {
-            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-        }
-
         float verticalInput = Input.GetAxisRaw("Vertical");
         float horizontalInput = Input.GetAxisRaw("Horizontal");
         float hoverInput = Input.GetAxisRaw("Hover");
