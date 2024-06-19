@@ -2,35 +2,28 @@ using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody))]
 [RequireComponent(typeof(CapsuleCollider))]
-
 public class SC_RigidbodyPlayerMovement : MonoBehaviour
 {
-    [Header("Walking")]
-    private float speed;
+    [Header("Walking")] private float speed;
     public float walkSpeed = 3.0f;
-    
-    [Header("Sprinting")]
-    public bool canSprint = true;
+
+    [Header("Sprinting")] public bool canSprint = true;
     public float sprintSpeed = 7.0f;
     public float sprintTime = 5.0f;
     public float staminaReplenishFactor = 0.25f;
-    
-    [Header("Crouching")]
-    public float crouchSpeed = 1.0f;
+
+    [Header("Crouching")] public float crouchSpeed = 1.0f;
     public float crouchYScale = 0.5f;
-    private float startYScale; 
-    
-    [Header("Jumping")]
-    public bool canJump = true;
+    private float startYScale;
+
+    [Header("Jumping")] public bool canJump = true;
     public float jumpHeight = 2.0f;
-    
-    [Header("Looking")]
-    public Camera playerCamera;
+
+    [Header("Looking")] public Camera playerCamera;
     public float lookSpeed = 2.0f;
     public float lookXLimit = 60.0f;
 
-    [Header("HP")] 
-    public float maxHp = 100.0f;
+    [Header("HP")] public float maxHp = 100.0f;
     private float hp;
     private float vyCache;
     public float hpImpactThreshold = 2000.0f;
@@ -41,21 +34,22 @@ public class SC_RigidbodyPlayerMovement : MonoBehaviour
     public float hpDeath = 15000.0f;
 
     private MovementState state;
-    private enum MovementState
+
+    public enum MovementState
     {
         walking,
         sprinting,
         crouching,
         air
     }
-    
+
     bool grounded = false;
     Rigidbody r;
     Vector2 rotation = Vector2.zero;
     float maxVelocityChange = 10.0f;
 
     private SC_FallDamage fallDamage;
-    
+
     public SC_RigidbodyPlayerMovement()
     {
         hp = maxHp;
@@ -86,18 +80,17 @@ public class SC_RigidbodyPlayerMovement : MonoBehaviour
 
         Quaternion localRotation = Quaternion.Euler(0f, Input.GetAxis("Mouse X") * lookSpeed, 0f);
         transform.rotation = transform.rotation * localRotation;
-       
-        StateHandler();
 
-        }
+        StateHandler();
+    }
 
     void FixedUpdate()
     {
         SprintTime();
         MovePlayer();
         vyCache = r.velocity.y;
-       }
-    
+    }
+
     // Movement
     private void StateHandler()
     {
@@ -107,28 +100,28 @@ public class SC_RigidbodyPlayerMovement : MonoBehaviour
             state = MovementState.crouching;
             speed = crouchSpeed;
         }
-        
+
         // Mode - Sprinting
         if (grounded && Input.GetButton("Shift") && canSprint && sprintTime > 0)
         {
             state = MovementState.sprinting;
             speed = sprintSpeed;
         }
-        
+
         // Mode - Walking
         else if (grounded && !Input.GetButton("Control"))
         {
             state = MovementState.walking;
-            speed = walkSpeed;  
-        } 
-        
+            speed = walkSpeed;
+        }
+
         // Mode - Air
         else
         {
             state = MovementState.air;
         }
     }
-    
+
     private void MovePlayer()
     {
         if (grounded)
@@ -136,7 +129,16 @@ public class SC_RigidbodyPlayerMovement : MonoBehaviour
             // Calculate how fast we should be moving
             Vector3 forwardDir = Vector3.Cross(transform.up, -playerCamera.transform.right).normalized;
             Vector3 rightDir = Vector3.Cross(transform.up, playerCamera.transform.forward).normalized;
-            Vector3 targetVelocity = (forwardDir * Input.GetAxis("Vertical") + rightDir * Input.GetAxis("Horizontal")) * speed;
+            Vector3 targetVelocity = (forwardDir * Input.GetAxis("Vertical") + rightDir * Input.GetAxis("Horizontal")) *
+                                     speed;
+
+            // Vector3 moveDirection = orientation.forward * Input.GetAxisRaw("Vertical") +
+            //                 orientation.right * Input.GetAxisRaw("Horizontal");
+            //
+            // if (onSlope())
+            // {
+            //     r.AddForce(GetSlopeMoveDirection(moveDirection) * speed, ForceMode.Force);
+            // }
 
             Vector3 velocity = transform.InverseTransformDirection(r.velocity);
             velocity.y = 0;
@@ -151,8 +153,10 @@ public class SC_RigidbodyPlayerMovement : MonoBehaviour
 
             Jump();
         }
+
         grounded = false;
     }
+
     void Jump()
     {
         if (Input.GetButton("Jump") && canJump)
@@ -192,11 +196,11 @@ public class SC_RigidbodyPlayerMovement : MonoBehaviour
             sprintTime += Time.deltaTime * staminaReplenishFactor;
         }
     }
-    
+
     // Health
     void OnCollisionEnter(Collision col)
     {
-        if (Vector3.Dot(col.GetContact(0).normal, Vector3.up) < 0.5f)
+        if ((Vector3.Dot(col.GetContact(0).normal, Vector3.up) < 0.5f))
         {
             if (r.velocity.y < -0.5f)
             {
@@ -204,34 +208,48 @@ public class SC_RigidbodyPlayerMovement : MonoBehaviour
                 return;
             }
         }
-        
-        float impactForce;
-        impactForce = fallDamage.calculateImpactForce(r, vyCache, Time.fixedDeltaTime);
-        
+
+        float impactForce = fallDamage.calculateImpactForce(r, vyCache, Time.fixedDeltaTime);
         float hpDamage = fallDamage.calculateFallDamage(
-            impactForce, hpImpactThreshold, hpSmallBruises, hpNormalInjuries, hpSeriousInjuries, hpFatalInjuries, hpDeath);
+            impactForce, hpImpactThreshold, hpSmallBruises, hpNormalInjuries, hpSeriousInjuries, hpFatalInjuries,
+            hpDeath);
         takeDamage(hpDamage);
     }
-    
-    void OnCollisionStay()
+
+    void OnCollisionStay(Collision collision)
     {
-        grounded = true;
+        foreach (ContactPoint contact in collision.contacts)
+        {
+            // Check if the contact point is within the ground layer and the normal is upwards
+            if (Vector3.Dot(contact.normal, Vector3.up) > 0.5f)
+            {
+                grounded = true;
+                return; // Exit the loop once a valid ground contact is found
+            }
+        }
+
+        grounded = false; // If no valid ground contacts, grounded is false
     }
-    
-    public float returnHp()
-    {
-        return hp;
-    }
-    
+
     public void takeDamage(float hpDamage)
     {
         hp -= hpDamage;
     }
-    
+
     public void Healing(float healPoints)
     {
         hp += healPoints;
-        hp = Mathf.Clamp(hp, 0, 100); 
+        hp = Mathf.Clamp(hp, 0, 100);
     }
-    
+
+    // Returns
+    public float returnHp()
+    {
+        return hp;
+    }
+
+    public MovementState returnState()
+    {
+        return state;
+    }
 }

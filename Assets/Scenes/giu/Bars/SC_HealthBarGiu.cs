@@ -4,7 +4,7 @@ using UnityEngine.UI;
 
 public class HealthBarGiu : StatusBar
 {
-    [SerializeField] private SC_RigidbodyPlayerMovement giuScript;
+    public SC_RigidbodyPlayerMovement giuScript;
     protected override void Start()
     {
         Slider = GetComponent<Slider>(); 
