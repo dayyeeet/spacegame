@@ -1,8 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEditor;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 [RequireComponent(typeof(SpaceShipMovementEvent))]
 public class Spaceship : MonoBehaviour
@@ -41,17 +37,6 @@ public class Spaceship : MonoBehaviour
 
     void Update()
     {
-        // For testing only
-        if (Input.GetKeyDown(KeyCode.P))
-        {
-            EditorApplication.ExitPlaymode();
-        }
-        // For testing only
-        if (Input.GetKeyDown(KeyCode.R))
-        {
-            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-        }
-
         float verticalInput = Input.GetAxisRaw("Vertical");
         float horizontalInput = Input.GetAxisRaw("Horizontal");
         float hoverInput = Input.GetAxisRaw("Hover");

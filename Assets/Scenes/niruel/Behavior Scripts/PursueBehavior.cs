@@ -1,8 +1,5 @@
-using System.Collections;
 using System.Collections.Generic;
-using UnityEditor.SceneManagement;
 using UnityEngine;
-
 
 [CreateAssetMenu(menuName = "Flock/Behavior/Pursue")]
 public class PursueBehavior : FilteredFlockBehavior
