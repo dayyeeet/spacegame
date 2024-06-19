@@ -1,0 +1,31 @@
+Rocket Particle: 
+	*Designation: TitleScreenRocket
+	-Add this as a child under "Spacefrigate"
+	-Set Position to  (0.006, -0.863, -3.907)
+	-Set Rotation to  (0, 5.969, 0)
+	-Set Scale to (0.1, 0.1, 0.1)
+
+	*Designation: MainSceneRocket
+	-Add this as a  child under SpaceshipModel
+	-Set Position to  (0, -0.86, -3.9)
+	-I'd disable the original "smoke" effect, but the rest of the 
+	 original particle is good to keep.
+	
+
+Little Alien Particle: 
+	*Designation: alienParticleAttack
+	-Add this as a child under LittleAlien.
+	-No other modication necessary, except have a script play particles when attacking
+
+Spider Alien Particle:
+	*Designation: spiderParticleAttack
+	-Add this as a child under the Final Spider enemy
+
+Damage Cube Particle:
+	*Designation: cubeParticleAttack
+	-Add this as a child under DamageCube
+
+Cube Particle:
+	*Designation: cubeParticlePickup
+	-Add this as a child under Cube (the pickup)
+	
