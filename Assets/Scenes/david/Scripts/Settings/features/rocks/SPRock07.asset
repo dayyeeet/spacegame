@@ -1,0 +1,18 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0d2d4c31118a43f58d57d6c3e0cf8c53, type: 3}
+  m_Name: SPRock07
+  m_EditorClassIdentifier: 
+  size: 4
+  prefab: {fileID: 8514374376476389842, guid: d273c433bfe67834796291b54c982bec, type: 3}
+  isGroundCover: 0
+  isCollidable: 1
