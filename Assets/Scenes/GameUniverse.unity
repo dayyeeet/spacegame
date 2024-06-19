@@ -1561,6 +1561,11 @@ PrefabInstance:
       propertyPath: giuScript
       value: 
       objectReference: {fileID: 1719905278}
+    - target: {fileID: 8609473653147057177, guid: c9b55522a4a6bec4da4196a1ad9e265c,
+        type: 3}
+      propertyPath: currentValue
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 8185935642983787579, guid: c9b55522a4a6bec4da4196a1ad9e265c, type: 3}
     m_RemovedGameObjects: []
@@ -1628,7 +1633,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxValue: 100
-  currentValue: 0
+  currentValue: 100
   giuScript: {fileID: 1719905278}
 --- !u!114 &1545424655
 MonoBehaviour:
