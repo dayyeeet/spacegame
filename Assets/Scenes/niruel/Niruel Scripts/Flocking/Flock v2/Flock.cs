@@ -8,7 +8,7 @@ public class Flock : MonoBehaviour
     public FlockAgentV2 agentPrefab;
     List<FlockAgentV2> agents = new List<FlockAgentV2>();
     public FlockBehavior behavior;
-    [SerializeField] float YspawnPos =0f;
+    public float YspawnPos =0f;
     public int startCount = 25;
     //make const latter
     //[Range(0f,1f)]

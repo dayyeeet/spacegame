@@ -12,7 +12,7 @@ public class FlockAgentV2 : MonoBehaviour
     public Flock agentFlock {  get { return m_agentFlock; } }
     Collider m_SphereCollider;
     public Collider agentCollider {  get { return m_SphereCollider; } }
-    public Rigidbody rb;
+    //public Rigidbody rb;
     GameObject player;
 
     // Start is called before the first frame update
@@ -20,7 +20,7 @@ public class FlockAgentV2 : MonoBehaviour
     {
         spideranim = GetComponentInChildren<spiderAnimation>();
         m_SphereCollider = GetComponent<Collider>();
-        rb = GetComponent<Rigidbody>();
+        //rb = GetComponent<Rigidbody>();
         player = GameObject.Find("First Person Playerg");
         if (player != null)
         {
@@ -35,7 +35,8 @@ public class FlockAgentV2 : MonoBehaviour
 
     public void Move(Vector3 velocity)
     {
-        transform.forward= velocity;
+        transform.right= velocity;
+        //Debug.Log(velocity);
         spideranim.isWalking = true;
         transform.position += velocity *Time.deltaTime;
          
@@ -47,23 +48,28 @@ public class FlockAgentV2 : MonoBehaviour
         if (Physics.Raycast(transform.position,-Vector3.up,out hit,3f))
         {
             //Debug.Log(hit.collider.gameObject.name);
+            
             transform.up = hit.transform.up;
+            if(hit.collider.gameObject.name == "gravity")
+            {
+                //transform.position = new Vector3(0, agentFlock.YspawnPos, 0);
+            }
         }
         float distance = Vector3.Distance(transform.position, player.transform.position);
-
+       
         if (distance<3f )
         {
                
 
-            Debug.Log($"the distance {distance}");
+          
             transform.LookAt(player.transform.position);
             spideranim.isAttacking = true;
-            Debug.Log($"the attack count {attackCount}");
         }
         else
         {
             spideranim.isAttacking = false;
         }
+        
     }
 
 

@@ -28,10 +28,12 @@ public class PursueBehavior : FilteredFlockBehavior
             Debug.DrawLine(agent.transform.position, t.position,Color.red);
             float distance = Vector3.Distance(agent.transform.position, t.position);
             Debug.Log(distance);
-            if (distance > 3f /*1.2f*/)
+            if (distance > 2f /*1.2f*/)
             {
+                
                 moveToPlayer = t.position - agent.transform.position;
                 moveToPlayer = Vector3.SmoothDamp(agent.transform.forward, moveToPlayer, ref currentVelocity, agentSmoothTime);
+                //Debug.Log($"the move player {moveToPlayer}");
                //agent.transform.LookAt(t.position);
             }
             

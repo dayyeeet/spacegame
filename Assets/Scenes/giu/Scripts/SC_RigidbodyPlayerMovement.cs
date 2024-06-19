@@ -61,7 +61,7 @@ public class SC_RigidbodyPlayerMovement : MonoBehaviour
     public SC_RigidbodyPlayerMovement()
     {
         hp = maxHp;
-        fallDamage = new SC_FallDamage();
+        //fallDamage = new SC_FallDamage();
     }
 
     void Awake()
