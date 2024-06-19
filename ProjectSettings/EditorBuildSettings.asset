@@ -9,6 +9,9 @@ EditorBuildSettings:
     path: Assets/Scenes/SampleScene.unity
     guid: 99c9720ab356a0642a771bea13969a05
   - enabled: 1
+    path: Assets/Scenes/trego/Scenes/StartScene.unity
+    guid: c6970856b86fbf542b77391c6dfe3ec3
+  - enabled: 1
     path: Assets/Scenes/GameUniverse.unity
     guid: 243dfdb137aac9d43a92f0776a10a4c1
   m_configObjects: {}
