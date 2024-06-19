@@ -3,10 +3,11 @@ using UnityEngine.SceneManagement;
 
 public class BackToMenu : MonoBehaviour
 {
-    [SerializeField] private AudioSource buttonClickSound;
-    public void BackToMenuButton()
+    private void Update()
     {
-        buttonClickSound.Play();
-        SceneManager.LoadScene("StartScene");
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            SceneManager.LoadScene("StartScene");
+        }
     }
 }

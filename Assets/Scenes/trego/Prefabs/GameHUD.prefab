@@ -331,6 +331,7 @@ GameObject:
   - component: {fileID: 5660605656770681927}
   - component: {fileID: 4155447752730953159}
   - component: {fileID: 5376050320021531768}
+  - component: {fileID: 5490208890795594202}
   m_Layer: 5
   m_Name: FuelBar
   m_TagString: Untagged
@@ -424,8 +425,23 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxValue: 100
-  currentValue: 40
-  fuelDecreaseRate: 0.5
+  currentValue: 100
+  fuelDecreaseRate: 0.75
+--- !u!114 &5490208890795594202
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3652499788193928400}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3331a6fba06ef3e4b80df17239a9cde1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  statusBar: {fileID: 5376050320021531768}
+  gameOver: {fileID: 5155981169560317906, guid: e062c753bdb47f84aba1e28f61b8667e,
+    type: 3}
 --- !u!1 &3727562060049615029
 GameObject:
   m_ObjectHideFlags: 0
@@ -1133,6 +1149,7 @@ GameObject:
   - component: {fileID: 6258436839315170091}
   - component: {fileID: 8859318230552720381}
   - component: {fileID: 8185935642983787579}
+  - component: {fileID: 7495612702432335872}
   m_Layer: 5
   m_Name: HealthBar
   m_TagString: Untagged
@@ -1227,6 +1244,21 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxValue: 100
   currentValue: 100
+--- !u!114 &7495612702432335872
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5419016359739753020}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3331a6fba06ef3e4b80df17239a9cde1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  statusBar: {fileID: 8185935642983787579}
+  gameOver: {fileID: 5155981169560317906, guid: e062c753bdb47f84aba1e28f61b8667e,
+    type: 3}
 --- !u!1 &5837487407653493634
 GameObject:
   m_ObjectHideFlags: 0
