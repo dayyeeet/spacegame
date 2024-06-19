@@ -35,6 +35,8 @@ public class SC_RigidbodyPlayerMovement : MonoBehaviour
 
     private MovementState state;
 
+    public PlayerSound playerSound;
+
     public enum MovementState
     {
         walking,
@@ -235,6 +237,7 @@ public class SC_RigidbodyPlayerMovement : MonoBehaviour
     public void takeDamage(float hpDamage)
     {
         hp -= hpDamage;
+        playerSound.isTakeDamage = true;
     }
 
     public void Healing(float healPoints)
