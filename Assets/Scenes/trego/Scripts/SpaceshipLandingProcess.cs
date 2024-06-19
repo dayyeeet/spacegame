@@ -3,12 +3,13 @@ using UnityEngine.UI;
 
 public class SpaceshipLandingProcess : MonoBehaviour
 {
-    [SerializeField] private Planet planetGameObject;
     [SerializeField] private GameObject landingUIText;
 
     private SC_PlanetGravity _gravity;
     private GetInAndOutSpaceship _getInAndOutController;
     private Rigidbody _spaceshipRigidbody;
+
+    public bool enabledInitial = false;
     
     private bool _canShipLand;
     private bool _isLanding;
@@ -18,7 +19,7 @@ public class SpaceshipLandingProcess : MonoBehaviour
         _spaceshipRigidbody = GetComponent<Rigidbody>();
         
         _gravity = GetComponent<SC_PlanetGravity>();
-        _gravity.enabled = false;
+        _gravity.enabled = enabledInitial;
 
         _getInAndOutController = GetComponentInChildren<GetInAndOutSpaceship>();
     }
@@ -39,6 +40,7 @@ public class SpaceshipLandingProcess : MonoBehaviour
         {
             var planetToLand = GetComponentFromAnyParent<Planet>(hit.collider.gameObject);
             _gravity.planet = planetToLand;
+            _getInAndOutController.SetPlanet(planetToLand);
             _canShipLand = planetToLand != null;
             landingUIText.SetActive(true);
         }
@@ -56,6 +58,7 @@ public class SpaceshipLandingProcess : MonoBehaviour
             _spaceshipRigidbody.isKinematic = true;
             _gravity.enabled = false;
             _isLanding = false;
+            
             StartCoroutine(_getInAndOutController.GetOutSpaceship());
         }
     }

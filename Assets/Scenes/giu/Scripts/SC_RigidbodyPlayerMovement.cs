@@ -1,8 +1,6 @@
-    using Unity.VisualScripting;
-    using UnityEngine;
-    using UnityEngine.Serialization;
+using UnityEngine;
 
-    [RequireComponent(typeof(Rigidbody))]
+[RequireComponent(typeof(Rigidbody))]
 [RequireComponent(typeof(CapsuleCollider))]
 
 public class SC_RigidbodyPlayerMovement : MonoBehaviour
@@ -213,8 +211,6 @@ public class SC_RigidbodyPlayerMovement : MonoBehaviour
         float hpDamage = fallDamage.calculateFallDamage(
             impactForce, hpImpactThreshold, hpSmallBruises, hpNormalInjuries, hpSeriousInjuries, hpFatalInjuries, hpDeath);
         takeDamage(hpDamage);
-        
-        //Debug.Log("Der Spieler hat Schaden erhalten: " + hpDamage + " ImpactForce war " + impactForce);
     }
     
     void OnCollisionStay()

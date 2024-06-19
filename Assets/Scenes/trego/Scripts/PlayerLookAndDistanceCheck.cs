@@ -1,5 +1,3 @@
-using System;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class PlayerLookAndDistanceCheck : MonoBehaviour
@@ -47,9 +45,9 @@ public class PlayerLookAndDistanceCheck : MonoBehaviour
         else
         {
             fPickupText.SetActive(false);
-            
+            if (_outline == null) return;
             // If no object is hit by the ray or it's too far away, disable the outline
-            if (_outline.enabled == true)
+            if (_outline.enabled)
             {
                 _outline.enabled = false;
             }
