@@ -650,7 +650,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isShrinkEnd: 0
-  nameOfSceneToLoad: GameHUD
+  nameOfSceneToLoad: GameUniverse
   creditsPanel: {fileID: 1839085349}
   gameNameText: {fileID: 442292577}
   gameNameReference: {fileID: 398768176}
