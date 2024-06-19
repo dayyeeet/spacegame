@@ -8,11 +8,21 @@ public class SC_ItemConverterOnPlayerGiu : MonoBehaviour
     
     public void GetFuel(float value)
     {
+        if (fuelBar.currentValue > fuelBar.maxValue)
+        {
+            fuelBar.currentValue = fuelBar.maxValue;
+            return;
+        }
         fuelBar.currentValue += value;
     }
 
     public void GetHealth(float value)
     {
+        if (healthBar.currentValue > healthBar.maxValue)
+        {
+            healthBar.currentValue = healthBar.maxValue;
+            return;
+        }
         healthBar.currentValue += value;
     }
 }

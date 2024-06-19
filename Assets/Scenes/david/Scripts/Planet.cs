@@ -124,7 +124,7 @@ public class Planet : MonoBehaviour
             var point = _shapeGenerator.GetScaledElevation(_shapeGenerator.CalculateUnscaledElevation(yPos));
             flockScript.YspawnPos = point + 2;
             flockScript.driveFactor = Random.Range(8, 11);
-            flockScript.maxSpeed = Random.Range(4, 8);
+            flockScript.maxSpeed = Random.Range(3, 7);
             flockScript.neighborRadis = 7;
             flockScript.avoidanceRadiusMultiplier = 0.7f;
         }

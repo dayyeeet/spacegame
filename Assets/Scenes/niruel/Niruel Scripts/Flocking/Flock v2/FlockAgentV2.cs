@@ -13,7 +13,7 @@ public class FlockAgentV2 : MonoBehaviour
     Collider m_SphereCollider;
     public Collider agentCollider {  get { return m_SphereCollider; } }
     public Rigidbody rb;
-    GameObject player;
+    SC_RigidbodyPlayerMovement player;
 
     // Start is called before the first frame update
     void Start()
@@ -21,10 +21,10 @@ public class FlockAgentV2 : MonoBehaviour
         spideranim = GetComponentInChildren<spiderAnimation>();
         m_SphereCollider = GetComponent<Collider>();
         rb = GetComponent<Rigidbody>();
-        player = GameObject.Find("First Person Player");
-        if (player != null)
+        var playerObj = GameObject.Find("First Person Player");
+        if (playerObj != null)
         {
-            //Debug.Log($"player is here with {player.name}");
+            player = playerObj.GetComponent<SC_RigidbodyPlayerMovement>();
         }
     }
 
@@ -41,6 +41,8 @@ public class FlockAgentV2 : MonoBehaviour
          
     }
     int attackCount = 0;
+    private float cooldownTime = 5f;
+    private float nextTime = 0;
     private void Update()
     {
         RaycastHit hit;
@@ -51,14 +53,12 @@ public class FlockAgentV2 : MonoBehaviour
         }
         float distance = Vector3.Distance(transform.position, player.transform.position);
 
-        if (distance<3f )
+        if (distance < 3f && Time.time >= nextTime)
         {
-               
-
-            Debug.Log($"the distance {distance}");
             transform.LookAt(player.transform.position);
             spideranim.isAttacking = true;
-            Debug.Log($"the attack count {attackCount}");
+            player.takeDamage(4);
+            nextTime = Time.time + cooldownTime;
         }
         else
         {
