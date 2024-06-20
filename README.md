@@ -11,3 +11,4 @@ First fork the repository. Then create a branch for your fix/feature. Do everyth
 - https://assetstore.unity.com/packages/3d/vegetation/trees/polygon-trees-224068
 - https://assetstore.unity.com/packages/3d/vehicles/space/spacefrigate-130351
 - https://assetstore.unity.com/packages/tools/particles-effects/quick-outline-115488
+- https://assetstore.unity.com/packages/2d/textures-materials/dynamic-space-background-lite-104606
