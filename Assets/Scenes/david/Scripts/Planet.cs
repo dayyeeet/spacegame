@@ -117,7 +117,7 @@ public class Planet : MonoBehaviour
             flock.transform.position = transform.position;
             var flockScript = flock.AddComponent<Flock>();
             flockScript.planet = this;
-            flockScript.startCount = Random.Range(5, 26);
+            flockScript.startCount = Random.Range(50, 75);
             flockScript.agentPrefab = prefab;
             flockScript.behavior = flockBehavior;
             var yPos = new Vector3(0, shapeSettings.planetRadius, 0);
