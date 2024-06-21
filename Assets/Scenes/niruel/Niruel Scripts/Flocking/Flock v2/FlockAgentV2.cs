@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Security.Cryptography.X509Certificates;
+using Unity.VisualScripting;
 using UnityEngine;
 
 [RequireComponent(typeof(Collider))]
@@ -38,6 +39,7 @@ public class FlockAgentV2 : MonoBehaviour
         transform.forward= velocity;
         spideranim.isWalking = true;
         transform.position += velocity *Time.deltaTime;
+        SurrAlign();
          
     }
     int attackCount = 0;
@@ -45,24 +47,35 @@ public class FlockAgentV2 : MonoBehaviour
     private float nextTime = 0;
     private void Update()
     {
-        RaycastHit hit;
-        if (Physics.Raycast(transform.position,-Vector3.up,out hit,3f))
-        {
-            //Debug.Log(hit.collider.gameObject.name);
-            transform.up = hit.transform.up;
-        }
+       
         float distance = Vector3.Distance(transform.position, player.transform.position);
 
-        if (distance < 3f && Time.time >= nextTime)
+        if (distance <= m_agentFlock.neighborRadis )
         {
             transform.LookAt(player.transform.position);
-            spideranim.isAttacking = true;
-            player.takeDamage(4);
-            nextTime = Time.time + cooldownTime;
+            if (distance < 3f && Time.time >= nextTime)
+            {
+                spideranim.isAttacking = true;
+                player.takeDamage(4);
+                nextTime = Time.time + cooldownTime;
+            }
+            else
+            {
+                spideranim.isAttacking = false;
+            }
+
         }
-        else
+       
+    }
+    void SurrAlign()
+    {
+        Ray ray = new Ray(transform.position, -transform.up);
+        RaycastHit info = new RaycastHit();
+        if (Physics.Raycast(ray, out info))
         {
-            spideranim.isAttacking = false;
+            transform.up = info.transform.up.normalized;
+            transform.rotation = Quaternion.FromToRotation(Vector3.up,info.normal);
+
         }
     }
 

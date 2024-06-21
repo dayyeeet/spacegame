@@ -6,34 +6,45 @@ public class PursueBehavior : FilteredFlockBehavior
 {
     Vector3 currentVelocity;
     public float agentSmoothTime = .5f;
+    float distance;
+
+    Transform agentTrans;
+
+    Quaternion q;
     public override Vector3 CalculateMover(FlockAgentV2 agent, List<Transform> context, Flock flock)
     {
-        if (context.Count == 0)
+        
+
+        Vector3 Player = Vector3.zero;
+        Vector3 moveToPlayer = Vector3.zero;
+        List<Transform> filteredContex = (Filter == null) ? context : Filter.filter(agent, context);
+        if (filteredContex.Count == 0)
         {
             //Debug.Log("g");
             return Vector3.zero;
         }
-
-        Vector3 moveToPlayer = Vector3.zero;
-        Vector3 moveFromPlayer = Vector3.zero;
-        List<Transform> filteredContex = (Filter == null) ? context : Filter.filter(agent, context);
         //Debug.Log(filteredContex);
         foreach (Transform t in filteredContex)
-        {
-            
+        { 
             //Vector3 closestPoint = t.gameObject.GetComponent<Collider>().ClosestPoint(agent.transform.position);
-            Debug.DrawLine(agent.transform.position, t.position,Color.red);
-            float distance = Vector3.Distance(agent.transform.position, t.position);
-            Debug.Log(distance);
-            if (distance > 3f /*1.2f*/)
+            Debug.DrawLine(t.position, agent.transform.position,Color.red);
+            distance = Vector3.Distance(t.position, agent.transform.position);
+
+            //if (distance > 3f /*1.2f*/)
             {
-                moveToPlayer = t.position - agent.transform.position;
-                moveToPlayer = Vector3.SmoothDamp(agent.transform.forward, moveToPlayer, ref currentVelocity, agentSmoothTime);
-               //agent.transform.LookAt(t.position);
+                //Debug.Log(distance);
+                Player = t.position;
+                agentTrans = t;
             }
-            
+        }
+        Debug.Log($"context is {Player}");
+
+        if (distance > 2f) 
+        {
+            moveToPlayer = Player-agent.transform.position;
            
         }
+       
         return moveToPlayer;
 
     }

@@ -40,36 +40,39 @@ public class Flock : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        
+        //Debug.Log($"the radius is {planet.shapeSettings.planetRadius}");
         squareMaxSpeed= SqaureTheValue(maxSpeed);
         squareNeighborRadius = SqaureTheValue(neighborRadis);
         m_squareAviodanceRadius = squareNeighborRadius* SqaureTheValue(avoidanceRadiusMultiplier);
-        //for (int i = 0; i < startCount; i++)
-        //{
-        //    Vector2 randCirclePos = Random.insideUnitCircle * startCount * agentDensity;
-
-        //    Vector3 randPoint = transform.position + new Vector3(randCirclePos.x, transform.position.y + YspawnPos, randCirclePos.y);
-        //    FlockAgentV2 newAgent = Instantiate(
-        //        agentPrefab,
-        //        randPoint,
-        //        Quaternion.Euler(Vector3.up * Random.Range(0f, 360f)),
-        //        transform
-        //        );
-        //    newAgent.name = "Agent" + i;
-        //    newAgent.Init(this);
-        //    agents.Add(newAgent);
-        //}
+        for (int i = 0; i < startCount; i++)
+        {
+            //Vector2 randCirclePos = Random.insideUnitCircle * startCount * agentDensity;
+            Vector3 randV3 = new Vector3(Random.onUnitSphere.x, Random.onUnitSphere.y, Random.onUnitSphere.z) * 8;
+            //Debug.Log($"the radius is {randV3}");
+            Vector3 randPoint = randV3 * startCount * agentDensity;
+            FlockAgentV2 newAgent = Instantiate(
+                agentPrefab,
+                randPoint,
+                Quaternion.Euler(Vector3.up * Random.Range(0f, 360f)),
+                transform
+                );
+            newAgent.name = "Agent" + i;
+            newAgent.Init(this);
+            agents.Add(newAgent);
+        }
 
 
         StartCoroutine(Spawn());
     }
     IEnumerator Spawn()
     {
-        while (agents.Count<startCount)
+        while (agents.Count<startCount*2)
         {
             yield return new WaitForSeconds(2f);
             // Vector2 randCirclePos = Random.insideUnitCircle * startCount * agentDensity;
-
-            Vector3 randPoint = new Vector3(0, transform.position.y + YspawnPos, 0);
+            Vector3 randV3 = new Vector3(Random.onUnitSphere.x, Random.onUnitSphere.y, Random.onUnitSphere.z) * 10;
+            Vector3 randPoint = randV3 * startCount * agentDensity;
             FlockAgentV2 newAgent = Instantiate(
                 agentPrefab,
                 randPoint,
@@ -81,6 +84,7 @@ public class Flock : MonoBehaviour
             if (gravity != null)
             {
                 gravity.planet = planet;
+               
             }
             // newAgent.name = "Agent" + i;
             newAgent.Init(this);
