@@ -42,7 +42,7 @@ public class FlockAgentV2 : MonoBehaviour
         SurrAlign();
          
     }
-    int attackCount = 0;
+
     private float cooldownTime = 5f;
     private float nextTime = 0;
     private void Update()
@@ -70,13 +70,20 @@ public class FlockAgentV2 : MonoBehaviour
     void SurrAlign()
     {
         Ray ray = new Ray(transform.position, -transform.up);
+        Debug.DrawRay(transform.position, -Vector3.forward, Color.magenta);
         RaycastHit info = new RaycastHit();
-        if (Physics.Raycast(ray, out info))
+        if (Physics.SphereCast(transform.position, .5f,-Vector3.down,out info))
         {
-            transform.up = info.transform.up.normalized;
+            transform.up += info.transform.up.normalized;
             transform.rotation = Quaternion.FromToRotation(Vector3.up,info.normal);
 
         }
+    }
+
+    private void OnDrawGizmosSelected()
+    {
+        Gizmos.color = Color.yellow;
+        Gizmos.DrawWireSphere(transform.position - Vector3.up, .5f);
     }
 
 

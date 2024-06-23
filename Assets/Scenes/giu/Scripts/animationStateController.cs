@@ -12,8 +12,7 @@ public class animationStateController : MonoBehaviour
     {
         animator = GetComponent<Animator>();
         player = GetComponent<SC_RigidbodyPlayerMovement>();
-        Debug.Log(animator);
-        Debug.Log(player);
+        
     }
 
     // Update is called once per frame

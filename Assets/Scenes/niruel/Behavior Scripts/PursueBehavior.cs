@@ -37,7 +37,7 @@ public class PursueBehavior : FilteredFlockBehavior
                 agentTrans = t;
             }
         }
-        Debug.Log($"context is {Player}");
+     
 
         if (distance > 2f) 
         {
