@@ -30,19 +30,20 @@ public class PursueBehavior : FilteredFlockBehavior
             Debug.DrawLine(t.position, agent.transform.position,Color.red);
             distance = Vector3.Distance(t.position, agent.transform.position);
 
-            //if (distance > 3f /*1.2f*/)
-            {
-                //Debug.Log(distance);
                 Player = t.position;
                 agentTrans = t;
-            }
+            
         }
      
 
-        if (distance > 2f) 
+        if (distance > 3f) 
         {
             moveToPlayer = Player-agent.transform.position;
            
+        }
+        else
+        {
+            moveToPlayer = agent.transform.position;
         }
        
         return moveToPlayer;

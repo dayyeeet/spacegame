@@ -45,43 +45,43 @@ public class Flock : MonoBehaviour
         squareMaxSpeed= SqaureTheValue(maxSpeed);
         squareNeighborRadius = SqaureTheValue(neighborRadis);
         m_squareAviodanceRadius = squareNeighborRadius* SqaureTheValue(avoidanceRadiusMultiplier);
-        for (int i = 0; i < startCount; i++)
-        {
-            //Vector2 randCirclePos = Random.insideUnitCircle * startCount * agentDensity;
-            Vector3 spawnPoint = planet.transform.position;
-            Vector3 randDir = Random.onUnitSphere; 
-            spawnPoint += (randDir * (planet.gravityObject.transform.localScale.y-planet.shapeSettings.planetRadius));
-            //SphereCollider sC = planet.gravityObject.GetComponent<SphereCollider>();
-            //if (sC != null)
-            //{
-            //   //spawnPoint+= sC.ClosestPoint(spawnPoint);
-            //    Debug.Log("not null");
-            //}
-            //Vector3 randV3 = new Vector3(Random.onUnitSphere.x, Random.onUnitSphere.y, Random.onUnitSphere.z) * 8;
-            //Debug.Log($"the radius is {randV3}");
-            //Vector3 randPoint = spawnPoint * startCount * agentDensity;
-            FlockAgentV2 newAgent = Instantiate(
-                agentPrefab,
-                spawnPoint,
-                Quaternion.Euler(Vector3.up * Random.Range(0f, 360f)),
-                transform
-                );
+        //for (int i = 0; i < startCount; i++)
+        //{
+        //    //Vector2 randCirclePos = Random.insideUnitCircle * startCount * agentDensity;
+        //    Vector3 spawnPoint = planet.transform.position;
+        //    Vector3 randDir = Random.onUnitSphere; 
+        //    spawnPoint += (randDir * (planet.gravityObject.transform.localScale.y-planet.shapeSettings.planetRadius));
+        //    //SphereCollider sC = planet.gravityObject.GetComponent<SphereCollider>();
+        //    //if (sC != null)
+        //    //{
+        //    //   //spawnPoint+= sC.ClosestPoint(spawnPoint);
+        //    //    Debug.Log("not null");
+        //    //}
+        //    //Vector3 randV3 = new Vector3(Random.onUnitSphere.x, Random.onUnitSphere.y, Random.onUnitSphere.z) * 8;
+        //    //Debug.Log($"the radius is {randV3}");
+        //    //Vector3 randPoint = spawnPoint * startCount * agentDensity;
+        //    FlockAgentV2 newAgent = Instantiate(
+        //        agentPrefab,
+        //        spawnPoint,
+        //        Quaternion.Euler(Vector3.up * Random.Range(0f, 360f)),
+        //        transform
+        //        );
             
-            newAgent.name = "Agent" + i;
-            newAgent.transform.localPosition = spawnPoint;
+        //    newAgent.name = "Agent" + i;
+        //    newAgent.transform.localPosition = spawnPoint;
             
            
-            var gravity = newAgent.GetComponent<SC_PlanetGravity>();
-            if (gravity != null)
-            {
-                gravity.planet = planet;
+        //    var gravity = newAgent.GetComponent<SC_PlanetGravity>();
+        //    if (gravity != null)
+        //    {
+        //        gravity.planet = planet;
                
 
-            }
+        //    }
            
-            newAgent.Init(this);
-            agents.Add(newAgent);
-        }
+        //    newAgent.Init(this);
+        //    agents.Add(newAgent);
+        //}
        
 
 
@@ -90,9 +90,9 @@ public class Flock : MonoBehaviour
     }
     IEnumerator Spawn()
     {
-        while (agents.Count<startCount*2)
+        while (agents.Count<startCount)
         {
-            yield return new WaitForSeconds(2f);
+            yield return new WaitForSeconds(1f);
             // Vector2 randCirclePos = Random.insideUnitCircle * startCount * agentDensity;
             //Vector3 randV3 = new Vector3(Random.onUnitSphere.x, Random.onUnitSphere.y, Random.onUnitSphere.z) * 10;
             //Vector3 randPoint = randV3 * startCount * agentDensity;
