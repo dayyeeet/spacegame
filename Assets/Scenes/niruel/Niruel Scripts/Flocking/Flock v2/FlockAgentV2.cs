@@ -71,20 +71,23 @@ public class FlockAgentV2 : MonoBehaviour
     {
         Ray ray = new Ray(transform.position, -transform.up);
         Debug.DrawRay(transform.position, -Vector3.forward, Color.magenta);
+       
         RaycastHit info = new RaycastHit();
-        if (Physics.SphereCast(transform.position, .5f,-Vector3.down,out info))
+       
+        if (Physics.Raycast(transform.position,-transform.up, out info, 1f))
         {
+            //Debug.Log(info.collider.gameObject.name);
             transform.up += info.transform.up.normalized;
             transform.rotation = Quaternion.FromToRotation(Vector3.up,info.normal);
 
         }
     }
 
-    private void OnDrawGizmosSelected()
-    {
-        Gizmos.color = Color.yellow;
-        Gizmos.DrawWireSphere(transform.position - Vector3.up, .5f);
-    }
+    //private void OnDrawGizmosSelected()
+    //{
+    //    Gizmos.color = Color.yellow;
+    //    Gizmos.DrawWireSphere(transform.position - Vector3.up, .5f);
+    //}
 
 
 }

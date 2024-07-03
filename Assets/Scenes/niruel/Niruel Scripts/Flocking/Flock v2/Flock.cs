@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq.Expressions;
 using UnityEngine;
 
 public class Flock : MonoBehaviour
@@ -99,20 +100,34 @@ public class Flock : MonoBehaviour
 
             Vector3 spawnPoint = planet.transform.position;
             Vector3 randDir = Random.onUnitSphere;
-            spawnPoint += (randDir * (planet.gravityObject.transform.localScale.y - planet.shapeSettings.planetRadius));
+            
+            spawnPoint += (randDir * planet.shapeSettings.planetRadius);
+            Debug.Log(spawnPoint);
             FlockAgentV2 newAgent = Instantiate(
                 agentPrefab,
                 spawnPoint,
                 Quaternion.Euler(Vector3.up * Random.Range(0f, 360f)),
                 transform
                 );
-            newAgent.transform.localPosition = spawnPoint;
+            RaycastHit info = new RaycastHit();
+            if (Physics.Raycast(newAgent.transform.position,-newAgent.transform.up,out info, 1f))
+            {
+                Debug.Log(info.collider.gameObject.name);
+                if (info.collider.gameObject.name == "gravity")
+                {
+                    Destroy(newAgent);
+                }
+               
+
+            }
+            //newAgent.transform.position = spawnPoint;
             var gravity = newAgent.GetComponent<SC_PlanetGravity>();
             if (gravity != null)
             {
                 gravity.planet = planet;
                
             }
+            Debug.Log(Vector3.Distance(newAgent.transform.position, planet.transform.position));
             // newAgent.name = "Agent" + i;
             newAgent.Init(this);
             agents.Add(newAgent);
