@@ -25,8 +25,6 @@ public class Spaceship : MonoBehaviour
 
     private void Awake()
     {
-        Cursor.visible = false;
-        Cursor.lockState = CursorLockMode.Confined;
         this.spaceShipMovementEvent = this.GetComponent<SpaceShipMovementEvent>();
     }
 
